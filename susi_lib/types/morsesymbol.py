@@ -7,7 +7,7 @@ class Morse:
             self.dots = self.__data.dots
             self.dashes = self.__data.dashes
             return
-        if not isinstance(data, MorseSymbol) or not isinstance(data, MorseSequence):
+        if not isinstance(data, MorseSymbol) and not isinstance(data, MorseSequence):
             raise TypeError()
         self.__data = data
         self.dots = self.__data.dots
@@ -20,10 +20,20 @@ class Morse:
         return str(self.__data)
 
     def __add__(self, other):
+        if isinstance(other, str):
+            other = Morse(other)
+        if not isinstance(other, Morse):
+            raise TypeError
         return Morse(self.__data + other.__data)
 
     def __len__(self):
         return len(self.__data)
+
+    def __getitem__(self, item):
+        return self.__data[item]
+
+    def get(self):
+        return self.__data.get()
 
 
 class MorseSymbol:
@@ -78,7 +88,7 @@ class MorseSymbol:
 
     def __add__(self, other):
         if self.__character in {'', ' '}:
-            return other
+                return other
         if isinstance(other, MorseSymbol):
             if other.__character not in {' ', ''}:
                 return MorseSequence(init=[self, MorseSymbol(''), other])
@@ -91,6 +101,14 @@ class MorseSymbol:
         if self.__character in {'', ' '}:
             return 0
         return len(self.__symbol_dict[self.__character])
+
+    def get(self):
+        return self
+
+    def __getitem__(self, item):
+        if item > 0:
+            raise IndexError
+        return self
 
 
 class MorseSequence:
@@ -138,9 +156,16 @@ class MorseSequence:
         raise TypeError("Can't add these types")
 
     def __eq__(self, other):
-        for l, r in zip(self.__seq, other.__seq):
-            if l != r:
+        for left, right in zip(self.__seq, other.__seq):
+            if left != right:
                 return False
         return True
+
     def __len__(self):
         return sum((1 if m not in (MorseSymbol(''), MorseSymbol(' ')) else 0 for m in self.__seq))
+
+    def __getitem__(self, item):
+        return self.__seq[item]
+
+    def get(self):
+        return self.__seq

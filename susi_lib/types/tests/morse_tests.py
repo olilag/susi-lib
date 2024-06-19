@@ -63,6 +63,8 @@ class MorseTestCase(unittest.TestCase):
         self.assertEqual(str(rax_e), str(rax))
         e_a = self.empty + self.a
         self.assertEqual(str(e_a), self.a_morse)
+        ad = self.a + 'd'
+        self.assertEqual(str(ad), self.a_morse + self.sym_sep + self.dash + self.dot + self.dot)
 
     def test_length(self):
         self.assertEqual(len(self.empty), 0)
