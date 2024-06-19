@@ -1,7 +1,32 @@
 from typing import List, Union
 
-
 class Morse:
+    def __init__(self, data):
+        if isinstance(data, str):
+            self.__data = MorseSymbol(data) if len(data) < 2 else MorseSequence(data)
+            self.dots = self.__data.dots
+            self.dashes = self.__data.dashes
+            return
+        if not isinstance(data, MorseSymbol) or not isinstance(data, MorseSequence):
+            raise TypeError()
+        self.__data = data
+        self.dots = self.__data.dots
+        self.dashes = self.__data.dashes
+
+    def __eq__(self, other):
+        return self.__data == other
+
+    def __str__(self):
+        return str(self.__data)
+
+    def __add__(self, other):
+        return Morse(self.__data + other.__data)
+
+    def __len__(self):
+        return len(self.__data)
+
+
+class MorseSymbol:
     __dot = '.'
     __dash = '-'
     __symbol_separator = '/'
@@ -41,7 +66,7 @@ class Morse:
     def __init__(self, character: str):
         if not character.isalpha() and character != ' ' and len(character) > 1:
             raise ValueError("Character is not part of alphabet")
-        self.__character = character
+        self.__character = character.lower()
         self.dots = self.__symbol_dict[self.__character].count(self.__dot)
         self.dashes = self.__symbol_dict[self.__character].count(self.__dash)
 
@@ -54,12 +79,12 @@ class Morse:
     def __add__(self, other):
         if self.__character in {'', ' '}:
             return other
-        if isinstance(other, Morse):
+        if isinstance(other, MorseSymbol):
             if other.__character not in {' ', ''}:
-                return MorseSequence(init=[self, Morse(''), other])
+                return MorseSequence(init=[self, MorseSymbol(''), other])
             return MorseSequence(init=[self, other])
         if isinstance(other, MorseSequence):
-            return (self + Morse('')) + other
+            return (self + MorseSymbol('')) + other
         raise TypeError("Can't add these types")
 
     def __len__(self):
@@ -72,41 +97,50 @@ class MorseSequence:
     def __init__(self, text="", init=None):
         if init is None:
             init = []
-        self.__seq: List[Morse] = []
+        self.__seq: List[MorseSymbol] = []
         if len(text) != 0:
             first = True
-            for c in text:
+            for c in text.lower():
                 if first and c == ' ':
                     continue
                 if first and c != ' ':
-                    self.__seq.append(Morse(c))
+                    self.__seq.append(MorseSymbol(c))
                     first = False
                     continue
-                if not first and c != ' ' and self.__seq[-1] not in (Morse(' '), Morse('')):
-                    self.__seq.append(Morse(''))
-                if c != ' ' or self.__seq[-1] not in (Morse(' '), Morse('')):
-                    self.__seq.append(Morse(c))
+                if not first and c != ' ' and self.__seq[-1] not in (MorseSymbol(' '), MorseSymbol('')):
+                    self.__seq.append(MorseSymbol(''))
+                if c != ' ' or self.__seq[-1] not in (MorseSymbol(' '), MorseSymbol('')):
+                    self.__seq.append(MorseSymbol(c))
+            self.dots = sum((x.dots for x in self.__seq))
+            self.dashes = sum((x.dashes for x in self.__seq))
             return
         self.__seq = init
+        self.dots = sum((x.dots for x in self.__seq))
+        self.dashes = sum((x.dashes for x in self.__seq))
 
     def __str__(self):
         return ''.join([str(x) for x in self.__seq])
 
-    def __add__(self, other: Union["MorseSequence", Morse]):
+    def __add__(self, other: Union["MorseSequence", MorseSymbol]):
         if isinstance(other, MorseSequence):
-            if self.__seq[-1] not in (Morse(' '), Morse('')):
-                self.__seq += Morse('') + other.__seq
+            if self.__seq[-1] not in (MorseSymbol(' '), MorseSymbol('')):
+                self.__seq += MorseSymbol('') + other.__seq
             else:
                 self.__seq += other.__seq
             return self
 
-        if isinstance(other, Morse):
-            if self.__seq[-1] not in (Morse(' '), Morse('')):
-                self.__seq += [Morse(''), other]
+        if isinstance(other, MorseSymbol):
+            if self.__seq[-1] not in (MorseSymbol(' '), MorseSymbol('')):
+                self.__seq += [MorseSymbol(''), other]
             else:
                 self.__seq.append(other)
             return self
         raise TypeError("Can't add these types")
 
+    def __eq__(self, other):
+        for l, r in zip(self.__seq, other.__seq):
+            if l != r:
+                return False
+        return True
     def __len__(self):
-        return sum((1 if m not in (Morse(''), Morse(' ')) else 0 for m in self.__seq))
+        return sum((1 if m not in (MorseSymbol(''), MorseSymbol(' ')) else 0 for m in self.__seq))

@@ -1,13 +1,13 @@
 import unittest
-from susi_lib.types.morse import Morse, MorseSequence
+from susi_lib.types.morsesymbol import Morse, MorseSymbol, MorseSequence
 
 
 class MorseTestCase(unittest.TestCase):
     def setUp(self):
-        self.dot = Morse._Morse__dot
-        self.dash = Morse._Morse__dash
-        self.sym_sep = Morse._Morse__symbol_separator
-        self.word_sep = Morse._Morse__word_separator
+        self.dot = MorseSymbol._MorseSymbol__dot
+        self.dash = MorseSymbol._MorseSymbol__dash
+        self.sym_sep = MorseSymbol._MorseSymbol__symbol_separator
+        self.word_sep = MorseSymbol._MorseSymbol__word_separator
         self.empty = Morse('')
         self.separator = Morse(' ')
         self.a = Morse('a')
@@ -20,19 +20,19 @@ class MorseTestCase(unittest.TestCase):
         self.q_morse = self.dash + self.dash + self.dot + self.dash
         self.r = Morse('r')
         self.r_morse = self.dot + self.dash + self.dot
-        self.text = MorseSequence("axerq")
+        self.text = Morse("axerq")
         self.text_morse = self.dot + self.dash + self.sym_sep + \
                           self.dash + self.dot + self.dot + self.dash + self.sym_sep + \
                           self.dot + self.sym_sep + \
                           self.dot + self.dash + self.dot + self.sym_sep + \
                           self.dash + self.dash + self.dot + self.dash
-        self.text2 = MorseSequence("axe rq")
+        self.text2 = Morse("axe rq")
         self.text2_morse = self.dot + self.dash + self.sym_sep + \
                           self.dash + self.dot + self.dot + self.dash + self.sym_sep + \
                           self.dot + self.word_sep + \
                           self.dot + self.dash + self.dot + self.sym_sep + \
                           self.dash + self.dash + self.dot + self.dash
-        self.text3 = MorseSequence("  axe   rq")
+        self.text3 = Morse("  axe   rq")
         self.text3_morse = self.dot + self.dash + self.sym_sep + \
                            self.dash + self.dot + self.dot + self.dash + self.sym_sep + \
                            self.dot + self.word_sep + \
@@ -66,7 +66,7 @@ class MorseTestCase(unittest.TestCase):
 
     def test_length(self):
         self.assertEqual(len(self.empty), 0)
-        self.assertEqual(len(Morse(' ')), 0)
+        self.assertEqual(len(self.separator), 0)
         self.assertEqual(len(self.a), 2)
         self.assertEqual(len(self.e), 1)
         self.assertEqual(len(self.q), 4)
@@ -74,6 +74,28 @@ class MorseTestCase(unittest.TestCase):
         self.assertEqual(len(self.text), 5)
         self.assertEqual(len(self.text2), 5)
         self.assertEqual(len(self.text3), 5)
+
+    def test_symbol_counters(self):
+        self.assertEqual(self.empty.dots, 0)
+        self.assertEqual(self.empty.dashes, 0)
+        self.assertEqual(self.separator.dots, 0)
+        self.assertEqual(self.separator.dashes, 0)
+        self.assertEqual(self.a.dots, 1)
+        self.assertEqual(self.a.dashes, 1)
+        self.assertEqual(self.x.dots, 2)
+        self.assertEqual(self.x.dashes, 2)
+        self.assertEqual(self.e.dots, 1)
+        self.assertEqual(self.e.dashes, 0)
+        self.assertEqual(self.q.dots, 1)
+        self.assertEqual(self.q.dashes, 3)
+        self.assertEqual(self.r.dots, 2)
+        self.assertEqual(self.r.dashes, 1)
+        self.assertEqual(self.text.dots, 7)
+        self.assertEqual(self.text.dashes, 7)
+        self.assertEqual(self.text2.dots, 7)
+        self.assertEqual(self.text2.dashes, 7)
+        self.assertEqual(self.text3.dots, 7)
+        self.assertEqual(self.text3.dashes, 7)
 
 
 if __name__ == '__main__':
