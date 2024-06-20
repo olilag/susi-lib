@@ -8,36 +8,81 @@ class MorseTestCase(unittest.TestCase):
         self.dash = MorseSymbol._MorseSymbol__dash
         self.sym_sep = MorseSymbol._MorseSymbol__symbol_separator
         self.word_sep = MorseSymbol._MorseSymbol__word_separator
-        self.empty = Morse('')
-        self.separator = Morse(' ')
-        self.a = Morse('a')
+        self.empty = Morse("")
+        self.separator = Morse(" ")
+        self.a = Morse("a")
         self.a_morse = self.dot + self.dash
-        self.x = Morse('x')
+        self.x = Morse("x")
         self.x_morse = self.dash + self.dot + self.dot + self.dash
-        self.e = Morse('e')
+        self.e = Morse("e")
         self.e_morse = self.dot
-        self.q = Morse('q')
+        self.q = Morse("q")
         self.q_morse = self.dash + self.dash + self.dot + self.dash
-        self.r = Morse('r')
+        self.r = Morse("r")
         self.r_morse = self.dot + self.dash + self.dot
         self.text = Morse("axerq")
-        self.text_morse = self.dot + self.dash + self.sym_sep + \
-                          self.dash + self.dot + self.dot + self.dash + self.sym_sep + \
-                          self.dot + self.sym_sep + \
-                          self.dot + self.dash + self.dot + self.sym_sep + \
-                          self.dash + self.dash + self.dot + self.dash
+        self.text_morse = (
+            self.dot
+            + self.dash
+            + self.sym_sep
+            + self.dash
+            + self.dot
+            + self.dot
+            + self.dash
+            + self.sym_sep
+            + self.dot
+            + self.sym_sep
+            + self.dot
+            + self.dash
+            + self.dot
+            + self.sym_sep
+            + self.dash
+            + self.dash
+            + self.dot
+            + self.dash
+        )
         self.text2 = Morse("axe rq")
-        self.text2_morse = self.dot + self.dash + self.sym_sep + \
-                          self.dash + self.dot + self.dot + self.dash + self.sym_sep + \
-                          self.dot + self.word_sep + \
-                          self.dot + self.dash + self.dot + self.sym_sep + \
-                          self.dash + self.dash + self.dot + self.dash
+        self.text2_morse = (
+            self.dot
+            + self.dash
+            + self.sym_sep
+            + self.dash
+            + self.dot
+            + self.dot
+            + self.dash
+            + self.sym_sep
+            + self.dot
+            + self.word_sep
+            + self.dot
+            + self.dash
+            + self.dot
+            + self.sym_sep
+            + self.dash
+            + self.dash
+            + self.dot
+            + self.dash
+        )
         self.text3 = Morse("  axe   rq")
-        self.text3_morse = self.dot + self.dash + self.sym_sep + \
-                           self.dash + self.dot + self.dot + self.dash + self.sym_sep + \
-                           self.dot + self.word_sep + \
-                           self.dot + self.dash + self.dot + self.sym_sep + \
-                           self.dash + self.dash + self.dot + self.dash
+        self.text3_morse = (
+            self.dot
+            + self.dash
+            + self.sym_sep
+            + self.dash
+            + self.dot
+            + self.dot
+            + self.dash
+            + self.sym_sep
+            + self.dot
+            + self.word_sep
+            + self.dot
+            + self.dash
+            + self.dot
+            + self.sym_sep
+            + self.dash
+            + self.dash
+            + self.dot
+            + self.dash
+        )
 
     def test_construct(self):
         self.assertEqual(str(self.empty), self.sym_sep)
@@ -55,16 +100,20 @@ class MorseTestCase(unittest.TestCase):
         ax = self.a + self.x
         self.assertEqual(str(ax), self.a_morse + self.sym_sep + self.x_morse)
         rax = self.r + ax
-        self.assertEqual(str(rax), self.r_morse + self.sym_sep + \
-                         self.a_morse + self.sym_sep + self.x_morse)
+        self.assertEqual(
+            str(rax),
+            self.r_morse + self.sym_sep + self.a_morse + self.sym_sep + self.x_morse,
+        )
         e_rax = self.empty + rax
         self.assertEqual(str(e_rax), str(rax))
         rax_e = rax + self.empty
         self.assertEqual(str(rax_e), str(rax))
         e_a = self.empty + self.a
         self.assertEqual(str(e_a), self.a_morse)
-        ad = self.a + 'd'
-        self.assertEqual(str(ad), self.a_morse + self.sym_sep + self.dash + self.dot + self.dot)
+        ad = self.a + "d"
+        self.assertEqual(
+            str(ad), self.a_morse + self.sym_sep + self.dash + self.dot + self.dot
+        )
 
     def test_length(self):
         self.assertEqual(len(self.empty), 0)
@@ -100,5 +149,5 @@ class MorseTestCase(unittest.TestCase):
         self.assertEqual(self.text3.dashes, 7)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
