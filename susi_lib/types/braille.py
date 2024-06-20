@@ -39,7 +39,7 @@ class BrailleChar:
         self.__char = character.lower()
 
     def __getitem__(self, item) -> bool:
-        if 0 > item or item > 6:
+        if 0 > item or item > 5:
             raise IndexError
         if self.__char == ' ':
             return False

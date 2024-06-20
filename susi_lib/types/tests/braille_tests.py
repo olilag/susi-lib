@@ -19,6 +19,10 @@ class BrailleTestCase(unittest.TestCase):
         self.assertEqual(self.meno[1].get_points(), (True, False, False, False, True, False))
         self.assertEqual(self.meno[2].get_points(), (True, False, True, True, True, False))
         self.assertEqual(self.meno[3].get_points(), (True, False, True, False, True, False))
+        with self.assertRaises(IndexError):
+            _ = self.a[0][6]
+        with self.assertRaises(IndexError):
+            _ = self.a[0][-1]
 
 
 if __name__ == '__main__':
