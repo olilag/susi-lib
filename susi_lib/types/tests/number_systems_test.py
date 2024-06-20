@@ -1,5 +1,5 @@
 import unittest
-from susi_lib.types import NumberSystems
+from susi_lib.types.number_systems import NumberSystems
 
 
 class NumberSystemsCase(unittest.TestCase):
