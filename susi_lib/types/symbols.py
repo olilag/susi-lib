@@ -57,7 +57,7 @@ class Symbols:
         __right_down,
     ]
     __rev_semaphore = {
-        __directions[value[0]] + __directions[value[1]]: key
+        value: key
         for key, value in {
             "a": (2, 1),
             "b": (3, 1),
@@ -130,23 +130,33 @@ class Symbols:
         if not isinstance(characters, str):
             raise TypeError
         self.__characters = characters.lower()
+        if isinstance(list(self.__rev_semaphore.keys())[0], tuple):
+            self.__rev_semaphore = {
+                self.__directions[key[0] - 1] + self.__directions[key[1] - 1]: value
+                for key, value in self.__rev_semaphore.items()
+            }
 
     @classmethod
     def from_string(cls, string: str):
+        if isinstance(list(cls.__rev_semaphore.keys())[0], tuple):
+            cls.__rev_semaphore = {
+                cls.__directions[key[0] - 1] + cls.__directions[key[1] - 1]: value
+                for key, value in cls.__rev_semaphore.items()
+            }
         if not isinstance(string, str):
             raise TypeError
         r = cls.__braille_from_string(string)
         if r[0]:
-            return r[1]
+            return r[1].strip()
         r = cls.__semaphore_from_string(string)
         if r[0]:
-            return r[1]
+            return r[1].strip()
         r = cls.__numbers_from_string(string)
         if r[0]:
-            return r[1]
+            return r[1].strip()
         r = cls.__morse_from_string(string)
         if r[0]:
-            return r[1]
+            return r[1].strip()
         raise ValueError
 
     @classmethod
@@ -187,7 +197,7 @@ class Symbols:
 
     @classmethod
     def __numbers_from_string(cls, string: str):
-        nums = string.split(" ,")
+        nums = string.split(", ")
         bases = [2, 10, 16]
         base = 2
         miss = 0
@@ -203,7 +213,7 @@ class Symbols:
             return False, ""
         result = ""
         for num in nums:
-            result += (num, base)
+            result += chr(ord("a") - 1 + int(num, base))
         return True, result
 
     def to_braille(self) -> Braille:
