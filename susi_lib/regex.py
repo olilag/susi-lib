@@ -8,7 +8,12 @@ from susi_lib.utils import export
 class RegEx:
 
     def __init__(self, pattern: str):
-        self.__re = re.compile(pattern, re.MULTILINE | re.IGNORECASE)
+        if not isinstance(pattern, str):
+            raise TypeError
+        try:
+            self.__re = re.compile(pattern, re.MULTILINE | re.IGNORECASE)
+        except Exception as e:
+            raise ValueError("Invalid regex pattern: " + str(e))
         self.__data = None
 
     def set_data(self, data: Union[List[str], str]):
@@ -23,6 +28,9 @@ class RegEx:
 
         input_text = "\n".join(self.__data)
         return self.__re.findall(input_text)
+
+    def get_pattern(self):
+        return self.__re.pattern
 
 
 @export
