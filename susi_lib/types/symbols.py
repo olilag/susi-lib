@@ -242,6 +242,11 @@ class Symbols:
             raise TypeError
         return self.__characters == other.__characters
 
+    def __ne__(self, other):
+        if isinstance(other, BrailleChar):
+            return not self == other
+        raise TypeError
+
     def __add__(self, other):
         if isinstance(other, str):
             return Symbols(self.__characters + other)

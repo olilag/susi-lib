@@ -93,6 +93,11 @@ class MorseSymbol:
             return self.__character == other.__character
         raise TypeError
 
+    def __ne__(self, other):
+        if isinstance(other, BrailleChar):
+            return not self == other
+        raise TypeError
+
     def __add__(self, other):
         if self.__character in {"", " "}:
             return other

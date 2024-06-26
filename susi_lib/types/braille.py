@@ -54,6 +54,11 @@ class BrailleChar:
             return self.__char == other.__char
         raise TypeError
 
+    def __ne__(self, other):
+        if isinstance(other, BrailleChar):
+            return not self == other
+        raise TypeError
+
     def get_points(self) -> Tuple[bool, bool, bool, bool, bool, bool]:
         if self.__char == " ":
             return (False,) * 6

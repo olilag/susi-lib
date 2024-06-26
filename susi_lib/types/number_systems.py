@@ -25,6 +25,11 @@ class NumberChar:
             raise TypeError
         return self.__char == other.__char and self.__base == other.__base
 
+    def __ne__(self, other):
+        if isinstance(other, BrailleChar):
+            return not self == other
+        raise TypeError
+
     @classmethod
     def get_dict(cls):
         return cls.__symbol_dict

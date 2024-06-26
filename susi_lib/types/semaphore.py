@@ -69,6 +69,11 @@ class SemaphoreChar:
             return self.__char == other.__char
         raise TypeError
 
+    def __ne__(self, other):
+        if isinstance(other, BrailleChar):
+            return not self == other
+        raise TypeError
+
     def get_directions(self) -> Tuple[int, int]:
         if self.__char == " ":
             return -1, -1
