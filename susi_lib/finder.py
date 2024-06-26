@@ -1,10 +1,15 @@
-from typing import Callable, Literal, overload, List
+from typing import Callable, Literal, overload, List, Union
 
 
 class Finder:
-    def __init__(self, file_name: str, *functions: Callable[[str], bool]):
-        with open(file_name, "r", encoding="utf-8") as f:
-            self.__text = f.readlines()
+    def __init__(self, inp: Union[str, List[str]], *functions: Callable[[str], bool]):
+        if isinstance(inp, str):
+            with open(inp, "r", encoding="utf-8") as f:
+                self.__text = f.readlines()
+        elif isinstance(inp, list):
+            self.__text = inp
+        else:
+            raise TypeError
         self.__function = list(functions)
 
     def __valid_word(self, word: str):
@@ -14,7 +19,7 @@ class Finder:
         return True
 
     @overload
-    def __execute(self, first: Literal[True]) -> str: ...
+    def __execute(self, first: Literal[True]) -> Union[str, None]: ...
 
     @overload
     def __execute(self, first: Literal[False]) -> List[str]: ...
@@ -26,7 +31,7 @@ class Finder:
                 if first:
                     return word
                 result.append(word)
-        return result
+        return result if not first else None
 
     def __iter__(self):
         for word in self.__text:
