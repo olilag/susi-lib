@@ -11,6 +11,7 @@ class BrailleTestCase(unittest.TestCase):
     def test_to_string(self):
         self.assertEqual(str(self.a), "⠁")
         self.assertEqual(str(self.b), "⠃")
+        self.assertEqual(str(self.meno), "⠍⠑⠝⠕")
 
     def test_get_points(self):
         self.assertEqual(
@@ -35,6 +36,13 @@ class BrailleTestCase(unittest.TestCase):
             _ = self.a[0][6]
         with self.assertRaises(IndexError):
             _ = self.a[0][-1]
+
+    def test_add(self):
+        self.assertEqual(str(self.a + self.b), "⠁⠃")
+        self.assertEqual(str(self.a + "b"), "⠁⠃")
+        self.assertEqual(str(self.a + self.b[0]), "⠁⠃")
+        with self.assertRaises(TypeError):
+            _ = self.a + 10
 
 
 if __name__ == "__main__":

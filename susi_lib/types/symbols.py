@@ -236,3 +236,15 @@ class Symbols:
 
     def __len__(self):
         return len(self.__characters)
+
+    def __eq__(self, other):
+        if not isinstance(other, Symbols):
+            raise TypeError
+        return self.__characters == other.__characters
+
+    def __add__(self, other):
+        if isinstance(other, str):
+            return Symbols(self.__characters + other)
+        if isinstance(other, Symbols):
+            return Symbols(self.__characters + other.__characters)
+        raise TypeError

@@ -81,14 +81,17 @@ class SemaphoreChar:
 
 class Semaphore:
     def __init__(self, characters):
-        if not isinstance(characters, str):
+        if isinstance(characters, str):
+            correct = True
+            for c in characters.lower():
+                correct = correct and (c.isalpha() or c == " ")
+            if not correct:
+                raise ValueError
+            self.__seq = [SemaphoreChar(c) for c in characters]
+        elif isinstance(characters, list):
+            self.__seq = characters
+        else:
             raise TypeError
-        correct = True
-        for c in characters.lower():
-            correct = correct and (c.isalpha() or c == " ")
-        if not correct:
-            raise ValueError
-        self.__seq = [SemaphoreChar(c) for c in characters]
 
     def __str__(self):
         return "".join(str(c) for c in self.__seq)
@@ -101,14 +104,11 @@ class Semaphore:
 
     def __add__(self, other):
         if isinstance(other, str):
-            self.__seq += [SemaphoreChar(c) for c in other]
-            return self
+            return Semaphore(self.__seq + [SemaphoreChar(c) for c in other])
         if isinstance(other, Semaphore):
-            self.__seq += other.__seq
-            return self
+            return Semaphore(self.__seq + other.__seq)
         if isinstance(other, SemaphoreChar):
-            self.__seq.append(other)
-            return self
+            return Semaphore(self.__seq + [other])
         raise TypeError
 
     @staticmethod

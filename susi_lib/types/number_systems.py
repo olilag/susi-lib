@@ -25,21 +25,31 @@ class NumberChar:
             raise TypeError
         return self.__char == other.__char and self.__base == other.__base
 
+    @classmethod
+    def get_dict(cls):
+        return cls.__symbol_dict
+
 
 class NumberSystems:
     def __init__(self, characters, base=10):
-        if not isinstance(characters, str):
+        if isinstance(characters, str):
+            correct = True
+            for c in characters.lower():
+                correct = correct and (c.isalpha() or c == " ")
+            if not correct:
+                raise ValueError
+            self.__base = base
+            self.__seq = [NumberChar(c, self.__base) for c in characters]
+        elif isinstance(characters, list):
+            self.__base = base
+            self.__seq = characters
+        else:
             raise TypeError
-        correct = True
-        for c in characters.lower():
-            correct = correct and (c.isalpha() or c == " ")
-        if not correct:
-            raise ValueError
-        self.__base = base
-        self.__seq = [NumberChar(c) for c in characters]
 
     def __str__(self):
-        return ", ".join([str(c) for c in self.__seq])
+        return ", ".join(
+            [str(c) for c in self.__seq if c != NumberChar(" ", self.__base)]
+        )
 
     def __len__(self):
         return len(self.__seq)
@@ -49,23 +59,26 @@ class NumberSystems:
 
     def __add__(self, other):
         if isinstance(other, str):
-            self.__seq += [NumberChar(c, self.__base) for c in other]
+            return NumberSystems(
+                self.__seq + [NumberChar(c, self.__base) for c in other]
+            )
         if isinstance(other, NumberSystems):
+            old_base = other.__base
             other.change_base(self.__base)
-            self.__seq += other.__seq
-            return self
+            ret = NumberSystems(self.__seq + other.__seq, self.__base)
+            other.change_base(old_base)
+            return ret
         if isinstance(other, NumberChar):
-            self.__seq.append(other.change_base(self.__base))
-            return self
+            return NumberSystems(self.__seq + [other], self.__base)
         raise TypeError
 
-    def change_base(self, base):
+    def change_base(self, base: int):
         if not isinstance(base, int):
             raise TypeError
         self.__base = base
         for n in self.__seq:
             n.change_base(self.__base)
 
-    @classmethod
-    def get_dict(cls):
-        return cls.__symbol_dict
+    @staticmethod
+    def get_dict():
+        return NumberChar.get_dict()

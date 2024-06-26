@@ -38,8 +38,15 @@ class SemaphoreTestCase(unittest.TestCase):
 
     def test_directions(self):
         self.assertEqual(self.a[0].get_directions(), (2, 1))
+        self.assertEqual(self.ab[0].get_directions(), (2, 1))
         self.assertEqual(self.ab[1].get_directions(), (3, 1))
-        self.assertEqual(self.ab[2].get_directions(), (1, 1))
+
+    def test_add(self):
+        self.assertEqual(str(self.a + self.a), str(Semaphore("aa")))
+        self.assertEqual(str(self.a + self.a[0]), str(Semaphore("aa")))
+        self.assertEqual(str(self.a + "a"), str(Semaphore("aa")))
+        with self.assertRaises(TypeError):
+            _ = self.a + 10
 
 
 if __name__ == "__main__":

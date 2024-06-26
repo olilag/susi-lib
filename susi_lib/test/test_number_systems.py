@@ -46,8 +46,8 @@ class NumberSystemsCase(unittest.TestCase):
         )
 
     def test_add(self):
-        self.assertEqual(self.a + self.a, NumberSystems("aa"))
-        self.assertEqual(self.a + self.a_h, NumberSystems("aa"))
+        self.assertEqual(str(self.a + self.a), str(NumberSystems("aa")))
+        self.assertEqual(str(self.a + self.a_h), str(NumberSystems("aa", 16)))
         with self.assertRaises(TypeError):
             x = self.a + 10
 

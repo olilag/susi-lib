@@ -36,6 +36,10 @@ class SymbolsTestCase(unittest.TestCase):
             Symbols.from_string(str(self.meno_mesto.to_number_systems())), "menomesto"
         )
 
+    def test_add(self):
+        self.assertEqual(self.a + self.a, Symbols("aa"))
+        self.assertEqual(self.a + "a", Symbols("aa"))
+
 
 if __name__ == "__main__":
     unittest.main()
