@@ -1,8 +1,6 @@
 from susi_lib.types import Symbols
 from susi_lib.utils import export
 
-__all__ = []
-
 
 @export
 def is_palindrome(word):

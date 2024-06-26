@@ -3,8 +3,6 @@ from typing import Union, List, Tuple
 from enum import Enum, auto
 from susi_lib.utils import export
 
-__all__ = []
-
 
 @export
 class RegEx:
