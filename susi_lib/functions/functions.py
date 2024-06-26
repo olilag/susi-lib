@@ -8,7 +8,7 @@ def is_palindrome(word):
     return True
 
 
-def decode_morse(string: str):
+def decode(string: str):
     return Symbols.from_string(string)
 
 
@@ -16,24 +16,12 @@ def encode_morse(string: str):
     return str(Symbols(string).to_morse())
 
 
-def decode_braille(string: str):
-    return Symbols.from_string(string)
-
-
 def encode_braille(string: str):
     return str(Symbols(string).to_braille())
 
 
-def decode_semaphore(string: str):
-    return Symbols.from_string(string)
-
-
 def encode_semaphore(string: str):
     return str(Symbols(string).to_semaphore())
-
-
-def decode_numbers(string: str):
-    return Symbols.from_string(string)
 
 
 def encode_numbers(string: str, base=10):
