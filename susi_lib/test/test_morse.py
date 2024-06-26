@@ -1,5 +1,5 @@
 import unittest
-from susi_lib.types.morsesymbol import Morse, MorseSymbol, MorseSequence
+from susi_lib.types.morse import Morse, MorseSymbol, MorseSequence
 
 
 class MorseTestCase(unittest.TestCase):

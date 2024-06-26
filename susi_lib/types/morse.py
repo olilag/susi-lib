@@ -4,20 +4,25 @@ from susi_lib.utils import export
 
 @export
 class Morse:
-    def __init__(self, data):
+    def __init__(self, data: Union[str, "MorseSymbol", "MorseSequence"]):
         if isinstance(data, str):
             self.__data = MorseSymbol(data) if len(data) < 2 else MorseSequence(data)
             self.dots = self.__data.dots
             self.dashes = self.__data.dashes
             return
         if not isinstance(data, MorseSymbol) and not isinstance(data, MorseSequence):
-            raise TypeError()
+            raise TypeError
         self.__data = data
         self.dots = self.__data.dots
         self.dashes = self.__data.dashes
 
     def __eq__(self, other):
-        return self.__data == other
+        if not isinstance(other, Morse):
+            raise TypeError
+        return self.__data == other.__data
+
+    def __ne__(self, other):
+        return not self == other
 
     def __str__(self):
         return str(self.__data)
@@ -96,9 +101,7 @@ class MorseSymbol:
         raise TypeError
 
     def __ne__(self, other):
-        if isinstance(other, MorseSymbol):
-            return not self == other
-        raise TypeError
+        return not self == other
 
     def __add__(self, other):
         if self.__character in {"", " "}:
@@ -181,10 +184,15 @@ class MorseSequence:
         raise TypeError("Can't add these types")
 
     def __eq__(self, other):
+        if not isinstance(other, MorseSequence):
+            raise TypeError
         for left, right in zip(self.__seq, other.__seq):
             if left != right:
                 return False
         return True
+
+    def __ne__(self, other):
+        return not self == other
 
     def __len__(self):
         return sum(

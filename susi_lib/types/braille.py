@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Union, List
 from susi_lib.utils import export
 
 
@@ -74,7 +74,7 @@ class BrailleChar:
 
 @export
 class Braille:
-    def __init__(self, characters: str):
+    def __init__(self, characters: Union[str, List[BrailleChar]]):
         if isinstance(characters, str):
             correct = True
             for c in characters.lower():
@@ -89,6 +89,14 @@ class Braille:
 
     def __str__(self):
         return "".join(str(c) for c in self.__seq)
+
+    def __eq__(self, other):
+        if isinstance(other, Braille):
+            return self.__seq == other.__seq
+        raise TypeError
+
+    def __ne__(self, other):
+        return not self == other
 
     def __len__(self):
         return len(self.__seq)

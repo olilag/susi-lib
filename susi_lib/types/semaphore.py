@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Union, List
 from susi_lib.utils import export
 
 
@@ -71,9 +71,7 @@ class SemaphoreChar:
         raise TypeError
 
     def __ne__(self, other):
-        if isinstance(other, SemaphoreChar):
-            return not self == other
-        raise TypeError
+        return not self == other
 
     def get_directions(self) -> Tuple[int, int]:
         if self.__char == " ":
@@ -87,7 +85,7 @@ class SemaphoreChar:
 
 @export
 class Semaphore:
-    def __init__(self, characters):
+    def __init__(self, characters: Union[str, List[SemaphoreChar]]):
         if isinstance(characters, str):
             correct = True
             for c in characters.lower():
@@ -117,6 +115,14 @@ class Semaphore:
         if isinstance(other, SemaphoreChar):
             return Semaphore(self.__seq + [other])
         raise TypeError
+
+    def __eq__(self, other):
+        if isinstance(other, Semaphore):
+            return self.__seq == other.__seq
+        raise TypeError
+
+    def __ne__(self, other):
+        return not self == other
 
     @staticmethod
     def get_dict():

@@ -245,9 +245,7 @@ class Symbols:
         return self.__characters == other.__characters
 
     def __ne__(self, other):
-        if isinstance(other, Symbols):
-            return not self == other
-        raise TypeError
+        return not self == other
 
     def __add__(self, other):
         if isinstance(other, str):

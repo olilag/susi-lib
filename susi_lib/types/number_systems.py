@@ -1,4 +1,5 @@
 from susi_lib.utils import export
+from typing import Union, List
 
 
 class NumberChar:
@@ -29,9 +30,7 @@ class NumberChar:
         return self.__char == other.__char and self.__base == other.__base
 
     def __ne__(self, other):
-        if isinstance(other, NumberChar):
-            return not self == other
-        raise TypeError
+        return not self == other
 
     @classmethod
     def get_dict(cls):
@@ -40,7 +39,7 @@ class NumberChar:
 
 @export
 class NumberSystems:
-    def __init__(self, characters, base=10):
+    def __init__(self, characters: Union[str, List[NumberChar]], base=10):
         if isinstance(characters, str):
             correct = True
             for c in characters.lower():
@@ -59,6 +58,14 @@ class NumberSystems:
         return ", ".join(
             [str(c) for c in self.__seq if c != NumberChar(" ", self.__base)]
         )
+
+    def __eq__(self, other):
+        if isinstance(other, NumberSystems):
+            return self.__seq == other.__seq and self.__base == other.__base
+        raise TypeError
+
+    def __ne__(self, other):
+        return not self == other
 
     def __len__(self):
         return len(self.__seq)
