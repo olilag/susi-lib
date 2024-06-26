@@ -137,7 +137,7 @@ class Symbols:
             }
 
     @classmethod
-    def from_string(cls, string: str):
+    def from_string(cls, string: str) -> str:
         if isinstance(list(cls.__rev_semaphore.keys())[0], tuple):
             cls.__rev_semaphore = {
                 cls.__directions[key[0] - 1] + cls.__directions[key[1] - 1]: value
@@ -222,8 +222,8 @@ class Symbols:
     def to_morse(self) -> Morse:
         return Morse(self.__characters)
 
-    def to_number_systems(self) -> NumberSystems:
-        return NumberSystems(self.__characters)
+    def to_number_systems(self, base=10) -> NumberSystems:
+        return NumberSystems(self.__characters, base)
 
     def to_semaphore(self) -> Semaphore:
         return Semaphore(self.__characters)
