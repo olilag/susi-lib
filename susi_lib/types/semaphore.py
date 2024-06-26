@@ -64,10 +64,19 @@ class SemaphoreChar:
             "(" + self.__directions[flag[0] - 1] + self.__directions[flag[1] - 1] + ")"
         )
 
+    def __eq__(self, other):
+        if isinstance(other, SemaphoreChar):
+            return self.__char == other.__char
+        raise TypeError
+
     def get_directions(self) -> Tuple[int, int]:
         if self.__char == " ":
             return -1, -1
         return self.__symbol_dict[self.__char]
+
+    @classmethod
+    def get_dict(cls):
+        return cls.__symbol_dict
 
 
 class Semaphore:
@@ -89,3 +98,19 @@ class Semaphore:
 
     def __getitem__(self, item) -> SemaphoreChar:
         return self.__seq[item]
+
+    def __add__(self, other):
+        if isinstance(other, str):
+            self.__seq += [SemaphoreChar(c) for c in other]
+            return self
+        if isinstance(other, Semaphore):
+            self.__seq += other.__seq
+            return self
+        if isinstance(other, SemaphoreChar):
+            self.__seq.append(other)
+            return self
+        raise TypeError
+
+    @staticmethod
+    def get_dict():
+        return SemaphoreChar.get_dict()

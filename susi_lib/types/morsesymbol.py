@@ -36,6 +36,10 @@ class Morse:
     def get(self):
         return self.__data.get()
 
+    @staticmethod
+    def get_dict():
+        return MorseSymbol.get_dict()
+
 
 class MorseSymbol:
     __dot = "."
@@ -85,7 +89,9 @@ class MorseSymbol:
         return self.__symbol_dict[self.__character]
 
     def __eq__(self, other):
-        return self.__character == other.__character
+        if isinstance(other, MorseSymbol):
+            return self.__character == other.__character
+        raise TypeError
 
     def __add__(self, other):
         if self.__character in {"", " "}:
@@ -110,6 +116,10 @@ class MorseSymbol:
         if item > 0:
             raise IndexError
         return self
+
+    @classmethod
+    def get_dict(cls):
+        return cls.__symbol_dict
 
 
 class MorseSequence:

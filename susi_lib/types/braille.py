@@ -49,12 +49,21 @@ class BrailleChar:
     def __str__(self):
         return chr(self.__symbol_dict[self.__char] + 0x2800)
 
+    def __eq__(self, other):
+        if isinstance(other, BrailleChar):
+            return self.__char == other.__char
+        raise TypeError
+
     def get_points(self) -> Tuple[bool, bool, bool, bool, bool, bool]:
         if self.__char == " ":
             return (False,) * 6
         return tuple(
             ((self.__symbol_dict[self.__char] >> i) % 2 == 1 for i in range(6))
         )
+
+    @classmethod
+    def get_dict(cls):
+        return cls.__symbol_dict
 
 
 class Braille:
@@ -76,3 +85,19 @@ class Braille:
 
     def __getitem__(self, item) -> BrailleChar:
         return self.__seq[item]
+
+    def __add__(self, other):
+        if isinstance(other, str):
+            self.__seq += [BrailleChar(c) for c in other]
+            return self
+        if isinstance(other, Braille):
+            self.__seq += other.__seq
+            return self
+        if isinstance(other, BrailleChar):
+            self.__seq.append(other)
+            return self
+        raise TypeError
+
+    @staticmethod
+    def get_dict():
+        return BrailleChar.get_dict()
