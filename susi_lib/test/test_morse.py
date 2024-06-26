@@ -148,6 +148,13 @@ class MorseTestCase(unittest.TestCase):
         self.assertEqual(self.text3.dots, 7)
         self.assertEqual(self.text3.dashes, 7)
 
+    def test_iter(self):
+        for c, exp in zip(
+            self.text,
+            (MorseSymbol(x) for x in ["a", "", "x", "", "e", "", "r", "", "q"]),
+        ):
+            self.assertEqual(c, exp)
+
 
 if __name__ == "__main__":
     unittest.main()

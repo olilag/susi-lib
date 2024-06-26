@@ -22,6 +22,15 @@ class MyTestCase(unittest.TestCase):
             create_regex(length=5, letters="auto", invert=True).get_pattern(),
             "^[^auto]{5}$",
         )
+        with self.assertRaises(ValueError):
+            create_regex(("abc", Selection.NONE), ("def"), ("", Selection.ANY))
+        with self.assertRaises(ValueError):
+            create_regex(
+                ("abc", Selection.NONE), ("def", Selection.INVERT), ("", Selection.NONE)
+            )
+
+    def test_regex(self):
+        pass
 
 
 if __name__ == "__main__":

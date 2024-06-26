@@ -1,5 +1,5 @@
 import unittest
-from susi_lib.types.semaphore import Semaphore
+from susi_lib.types.semaphore import Semaphore, SemaphoreChar
 
 
 class SemaphoreTestCase(unittest.TestCase):
@@ -47,6 +47,10 @@ class SemaphoreTestCase(unittest.TestCase):
         self.assertEqual(str(self.a + "a"), str(Semaphore("aa")))
         with self.assertRaises(TypeError):
             _ = self.a + 10
+
+    def test_iter(self):
+        for c, exp in zip(self.meno_mesto, (SemaphoreChar(x) for x in "meno mesto")):
+            self.assertEqual(c, exp)
 
 
 if __name__ == "__main__":

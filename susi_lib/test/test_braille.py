@@ -1,5 +1,5 @@
 import unittest
-from susi_lib.types.braille import Braille
+from susi_lib.types.braille import Braille, BrailleChar
 
 
 class BrailleTestCase(unittest.TestCase):
@@ -43,6 +43,10 @@ class BrailleTestCase(unittest.TestCase):
         self.assertEqual(str(self.a + self.b[0]), "⠁⠃")
         with self.assertRaises(TypeError):
             _ = self.a + 10
+
+    def test_iter(self):
+        for c, exp in zip(self.meno, (BrailleChar(x) for x in "meno")):
+            self.assertEqual(c, exp)
 
 
 if __name__ == "__main__":

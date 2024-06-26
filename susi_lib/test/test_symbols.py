@@ -40,6 +40,10 @@ class SymbolsTestCase(unittest.TestCase):
         self.assertEqual(self.a + self.a, Symbols("aa"))
         self.assertEqual(self.a + "a", Symbols("aa"))
 
+    def test_iter(self):
+        for c, exp in zip(self.meno_mesto, (Symbols(x) for x in "meno mesto")):
+            self.assertEqual(c, exp)
+
 
 if __name__ == "__main__":
     unittest.main()

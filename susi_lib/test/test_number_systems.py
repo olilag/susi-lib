@@ -1,5 +1,5 @@
 import unittest
-from susi_lib.types.number_systems import NumberSystems
+from susi_lib.types.number_systems import NumberSystems, NumberChar
 
 
 class NumberSystemsCase(unittest.TestCase):
@@ -49,7 +49,11 @@ class NumberSystemsCase(unittest.TestCase):
         self.assertEqual(str(self.a + self.a), str(NumberSystems("aa")))
         self.assertEqual(str(self.a + self.a_h), str(NumberSystems("aa", 16)))
         with self.assertRaises(TypeError):
-            x = self.a + 10
+            _ = self.a + 10
+
+    def test_iter(self):
+        for c, exp in zip(self.meno_mesto, (NumberChar(x) for x in "meno mesto")):
+            self.assertEqual(c, exp)
 
 
 if __name__ == "__main__":
