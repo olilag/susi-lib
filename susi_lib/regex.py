@@ -1,8 +1,12 @@
 import re
-from typing import Union, List, TypedDict, Unpack, Tuple, Optional
+from typing import Union, List, Tuple
 from enum import Enum, auto
+from susi_lib.utils import export
+
+__all__ = []
 
 
+@export
 class RegEx:
 
     def __init__(self, pattern: str):
@@ -23,12 +27,14 @@ class RegEx:
         return self.__re.findall(input_text)
 
 
+@export
 class Selection(Enum):
     NONE = auto()
     INVERT = auto()
     ANY = auto()
 
 
+@export
 def create_regex(
     *args: Tuple[str, Selection],
     length: Union[int, Tuple[int, int]] = None,
@@ -56,7 +62,9 @@ def create_regex(
         return RegEx(pattern)
     if length is None or letters is None or invert is None:
         raise ValueError
-    inv = '^' if invert else ""
-    quantify = f"{{{length}}}" if isinstance(length, int) else f"{{{length[0]},{length[1]}}}"
+    inv = "^" if invert else ""
+    quantify = (
+        f"{{{length}}}" if isinstance(length, int) else f"{{{length[0]},{length[1]}}}"
+    )
     pattern = f"^[{inv}{letters}]{quantify}$"
     return RegEx(pattern)

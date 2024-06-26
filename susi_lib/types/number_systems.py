@@ -1,3 +1,6 @@
+from susi_lib.utils import export
+
+
 class NumberChar:
     __symbol_dict = {chr(ord("a") + x): x + 1 for x in range(26)}
     __format = {2: "05b", 10: "d", 16: "x"}
@@ -26,7 +29,7 @@ class NumberChar:
         return self.__char == other.__char and self.__base == other.__base
 
     def __ne__(self, other):
-        if isinstance(other, BrailleChar):
+        if isinstance(other, NumberChar):
             return not self == other
         raise TypeError
 
@@ -35,6 +38,7 @@ class NumberChar:
         return cls.__symbol_dict
 
 
+@export
 class NumberSystems:
     def __init__(self, characters, base=10):
         if isinstance(characters, str):

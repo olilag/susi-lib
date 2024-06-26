@@ -1,4 +1,5 @@
 from typing import Tuple
+from susi_lib.utils import export
 
 
 class BrailleChar:
@@ -71,6 +72,7 @@ class BrailleChar:
         return cls.__symbol_dict
 
 
+@export
 class Braille:
     def __init__(self, characters: str):
         if isinstance(characters, str):

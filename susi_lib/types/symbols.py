@@ -2,8 +2,10 @@ from susi_lib.types import Braille
 from susi_lib.types import Morse
 from susi_lib.types import NumberSystems
 from susi_lib.types import Semaphore
+from susi_lib.utils import export
 
 
+@export
 class Symbols:
     __rev_braille = {
         chr(value + 0x2800): key
@@ -243,7 +245,7 @@ class Symbols:
         return self.__characters == other.__characters
 
     def __ne__(self, other):
-        if isinstance(other, BrailleChar):
+        if isinstance(other, Symbols):
             return not self == other
         raise TypeError
 

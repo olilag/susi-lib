@@ -1,4 +1,5 @@
 from typing import Tuple
+from susi_lib.utils import export
 
 
 class SemaphoreChar:
@@ -70,7 +71,7 @@ class SemaphoreChar:
         raise TypeError
 
     def __ne__(self, other):
-        if isinstance(other, BrailleChar):
+        if isinstance(other, SemaphoreChar):
             return not self == other
         raise TypeError
 
@@ -84,6 +85,7 @@ class SemaphoreChar:
         return cls.__symbol_dict
 
 
+@export
 class Semaphore:
     def __init__(self, characters):
         if isinstance(characters, str):

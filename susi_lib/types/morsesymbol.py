@@ -1,6 +1,8 @@
 from typing import List, Union
+from susi_lib.utils import export
 
 
+@export
 class Morse:
     def __init__(self, data):
         if isinstance(data, str):
@@ -94,7 +96,7 @@ class MorseSymbol:
         raise TypeError
 
     def __ne__(self, other):
-        if isinstance(other, BrailleChar):
+        if isinstance(other, MorseSymbol):
             return not self == other
         raise TypeError
 
