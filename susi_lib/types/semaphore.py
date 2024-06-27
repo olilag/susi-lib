@@ -1,7 +1,6 @@
 """Provides Semaphore class for representing strings in semaphore encoding."""
 
 from typing import Tuple, Union, List
-from susi_lib.utils import export
 
 
 class SemaphoreChar:
@@ -95,7 +94,6 @@ class SemaphoreChar:
         return cls.__symbol_dict
 
 
-@export
 class Semaphore:
     """Represents a string in semaphore.
 

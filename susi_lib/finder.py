@@ -1,10 +1,8 @@
 """Contains the Finder class for searching in text."""
 
 from typing import Callable, Literal, overload, List, Union
-from susi_lib.utils import export
 
 
-@export
 class Finder:
     """Class for finding words that satisfy all user provided functions.
 

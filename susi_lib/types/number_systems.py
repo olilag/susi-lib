@@ -1,7 +1,6 @@
 """Provides NumberSystems class for representing strings as numbers."""
 
 from typing import Union, List
-from susi_lib.utils import export
 
 
 class NumberChar:
@@ -49,7 +48,6 @@ class NumberChar:
         return cls.__symbol_dict
 
 
-@export
 class NumberSystems:
     """Represents a string as number.
 

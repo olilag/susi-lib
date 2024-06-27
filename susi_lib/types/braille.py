@@ -1,7 +1,6 @@
 """Provides Braille class for work with braille."""
 
 from typing import Tuple, Union, List
-from susi_lib.utils import export
 
 
 class BrailleChar:
@@ -82,7 +81,6 @@ class BrailleChar:
         return cls.__symbol_dict
 
 
-@export
 class Braille:
     """Represents a string in braille.
 

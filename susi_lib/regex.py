@@ -5,10 +5,8 @@ a RegEx instance based without the full knowledge of regular expression syntax.
 import re
 from typing import Union, List, Tuple
 from enum import Enum, auto
-from susi_lib.utils import export
 
 
-@export
 class RegEx:
     """Class to store and execute a regular expression on some provided data."""
 
@@ -61,7 +59,6 @@ class RegEx:
         return self.__re.pattern
 
 
-@export
 class Selection(Enum):
     """Enum to specify what to do with a set of characters when creating RE by create_regex."""
 
@@ -73,7 +70,6 @@ class Selection(Enum):
     """Override this set to match any character"""
 
 
-@export
 def create_regex(
     *args: Tuple[str, Selection],
     length: Union[int, Tuple[int, int]] = None,

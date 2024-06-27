@@ -1,10 +1,8 @@
 """Provides Morse class for representing a string in morse encoding."""
 
 from typing import List, Union
-from susi_lib.utils import export
 
 
-@export
 class Morse:
     """Represents a string in morse.
 
