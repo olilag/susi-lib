@@ -1,8 +1,12 @@
-from susi_lib.utils import export
+"""Provides NumberSystems class for representing strings as numbers."""
+
 from typing import Union, List
+from susi_lib.utils import export
 
 
 class NumberChar:
+    """Represents a character as number."""
+
     __symbol_dict = {chr(ord("a") + x): x + 1 for x in range(26)}
     __format = {2: "05b", 10: "d", 16: "x"}
 
@@ -15,6 +19,10 @@ class NumberChar:
         self.__base = base
 
     def change_base(self, base):
+        """Changes the base used to convert the char to number.
+
+        :param base: Int base of the desired system (2, 10, 16)
+        """
         if not isinstance(base, int):
             raise TypeError
         self.__base = base
@@ -34,15 +42,25 @@ class NumberChar:
 
     @classmethod
     def get_dict(cls):
+        """Returns dictionary for translating from chars to base 10 ints.
+
+        :return: Translation dictionary
+        """
         return cls.__symbol_dict
 
 
 @export
 class NumberSystems:
+    """Represents a string as number.
+
+    Can be subscripted, iterated through, compared for equality, added with other NumberSystems
+    objects, strings or NumberChars. Can get its length by len function.
+    """
+
     def __init__(self, characters: Union[str, List[NumberChar]], base=10):
         if not isinstance(base, int):
             raise TypeError("Base must an int")
-        if not base in [2, 10, 16]:
+        if base not in [2, 10, 16]:
             raise ValueError("Base must be 2, 10 or 16")
         if isinstance(characters, str):
             correct = True
@@ -93,6 +111,10 @@ class NumberSystems:
         raise TypeError("Can't add these two types")
 
     def change_base(self, base: int):
+        """Changes the base used to convert the char to number.
+
+        :param base: Int base of the desired system (2, 10, 16)
+        """
         if not isinstance(base, int):
             raise TypeError("Base must an int")
         if not base in [2, 10, 16]:
@@ -103,4 +125,8 @@ class NumberSystems:
 
     @staticmethod
     def get_dict():
+        """Returns dictionary for translating from chars to base 10 ints.
+
+        :return: Translation dictionary
+        """
         return NumberChar.get_dict()

@@ -1,6 +1,7 @@
+# pylint: skip-file
 import re
 import unittest
-from susi_lib.regex import *
+from susi_lib.regex import create_regex, RegEx, Selection
 
 
 class MyTestCase(unittest.TestCase):
@@ -26,7 +27,7 @@ class MyTestCase(unittest.TestCase):
             create_regex(length=5, letters="auto", invert=True).get_pattern(),
             "^[^auto]{5}$",
         )
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             create_regex(("abc", Selection.NONE), ("def"), ("", Selection.ANY))
         with self.assertRaises(ValueError):
             create_regex(
@@ -42,8 +43,8 @@ class MyTestCase(unittest.TestCase):
         r = RegEx("^.*[ae].*$")
         r.set_data(self.text)
         self.assertEqual(r.execute(), ["Lorem", "amet"])
-        r.set_data("lorem.txt")
-        with open("lorem.txt", "r", encoding="utf-8") as f:
+        r.set_data("susi_lib/test/lorem.txt")
+        with open("susi_lib/test/lorem.txt", "r", encoding="utf-8") as f:
             exp = re.findall(
                 "^.*[ae].*$", "".join(f.readlines()), re.MULTILINE | re.IGNORECASE
             )

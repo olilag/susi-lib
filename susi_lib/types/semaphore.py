@@ -1,8 +1,12 @@
+"""Provides Semaphore class for representing strings in semaphore encoding."""
+
 from typing import Tuple, Union, List
 from susi_lib.utils import export
 
 
 class SemaphoreChar:
+    """Represents a character in semaphore encoding."""
+
     __left = "\u2190"
     __up = "\u2191"
     __right = "\u2192"
@@ -74,18 +78,36 @@ class SemaphoreChar:
         return not self == other
 
     def get_directions(self) -> Tuple[int, int]:
+        """1-down, 2-down left, 3-left, 4-up left, 5-up, 6-up right, 7-right, 8-down right
+
+        :return: Pair (1-8, 1-8) representing semaphore directions of the character
+        """
         if self.__char == " ":
             return -1, -1
         return self.__symbol_dict[self.__char]
 
     @classmethod
     def get_dict(cls):
+        """Returns dictionary for translating from chars to direction pairs.
+
+        :return: Translation dictionary
+        """
         return cls.__symbol_dict
 
 
 @export
 class Semaphore:
+    """Represents a string in semaphore.
+
+    Can be subscripted, iterated through, compared for equality, added with other Semaphore
+    objects, strings or SemaphoreChars. Can get its length by len function.
+    """
+
     def __init__(self, characters: Union[str, List[SemaphoreChar]]):
+        """Creates Semaphore object from characters.
+
+        :param characters: String of alphabet and spaces
+        """
         if isinstance(characters, str):
             correct = True
             for c in characters.lower():
@@ -126,4 +148,8 @@ class Semaphore:
 
     @staticmethod
     def get_dict():
+        """Returns dictionary for translating from chars to direction pairs.
+
+        :return: Translation dictionary
+        """
         return SemaphoreChar.get_dict()

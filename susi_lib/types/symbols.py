@@ -1,150 +1,76 @@
-from susi_lib.types import Braille
-from susi_lib.types import Morse
-from susi_lib.types import NumberSystems
-from susi_lib.types import Semaphore
+"""Provides Symbols class for easy converting between encodings of one string."""
+
+from susi_lib.types.braille import Braille
+from susi_lib.types.morse import Morse
+from susi_lib.types.number_systems import NumberSystems
+from susi_lib.types.semaphore import Semaphore
 from susi_lib.utils import export
 
 
 @export
 class Symbols:
+    """Class for storing a string and getting its encodings.
+
+    Can be subscripted, iterated through, compared for equality, added with other Symbols objects
+    or strings. Can get its length by len function.
+    Provides functions to get other encodings.
+    """
+
     __rev_braille = {
-        chr(value + 0x2800): key
-        for key, value in {
-            "a": 0x1,
-            "b": 0x3,
-            "c": 0x9,
-            "d": 0x19,
-            "e": 0x11,
-            "f": 0xB,
-            "g": 0x1B,
-            "h": 0x13,
-            "i": 0xA,
-            "j": 0x1A,
-            "k": 0x5,
-            "l": 0x7,
-            "m": 0xD,
-            "n": 0x1D,
-            "o": 0x15,
-            "p": 0xF,
-            "q": 0x1F,
-            "r": 0x17,
-            "s": 0xE,
-            "t": 0x1E,
-            "u": 0x25,
-            "v": 0x27,
-            "w": 0x37,
-            "x": 0x2D,
-            "y": 0x3D,
-            "z": 0x35,
-            " ": ord(" ") - 0x2800,
-        }.items()
+        chr(value + 0x2800): key for key, value in Braille.get_dict().items()
     }
 
-    __left = "\u2190"
-    __up = "\u2191"
-    __right = "\u2192"
-    __down = "\u2193"
-    __left_up = "\u2196"
-    __right_up = "\u2197"
-    __right_down = "\u2198"
-    __left_down = "\u2199"
-    __directions = [
-        __down,
-        __left_down,
-        __left,
-        __left_up,
-        __up,
-        __right_up,
-        __right,
-        __right_down,
-    ]
     __rev_semaphore = {
-        value: key
-        for key, value in {
-            "a": (2, 1),
-            "b": (3, 1),
-            "c": (4, 1),
-            "d": (5, 1),
-            "e": (1, 6),
-            "f": (1, 7),
-            "g": (1, 8),
-            "h": (3, 2),
-            "i": (4, 2),
-            "j": (5, 7),
-            "k": (2, 5),
-            "l": (2, 6),
-            "m": (2, 7),
-            "n": (2, 8),
-            "o": (3, 4),
-            "p": (3, 5),
-            "q": (3, 6),
-            "r": (3, 7),
-            "s": (3, 8),
-            "t": (4, 5),
-            "u": (4, 6),
-            "v": (5, 6),
-            "w": (6, 7),
-            "x": (6, 8),
-            "y": (4, 7),
-            "z": (8, 7),
-        }.items()
+        "↙↓": "a",
+        "←↓": "b",
+        "↖↓": "c",
+        "↑↓": "d",
+        "↓↗": "e",
+        "↓→": "f",
+        "↓↘": "g",
+        "←↙": "h",
+        "↖↙": "i",
+        "↑→": "j",
+        "↙↑": "k",
+        "↙↗": "l",
+        "↙→": "m",
+        "↙↘": "n",
+        "←↖": "o",
+        "←↑": "p",
+        "←↗": "q",
+        "←→": "r",
+        "←↘": "s",
+        "↖↑": "t",
+        "↖↗": "u",
+        "↑↗": "v",
+        "↗→": "w",
+        "↗↘": "x",
+        "↖→": "y",
+        "↘→": "z",
     }
 
     __dot = "."
     __dash = "-"
     __symbol_separator = "/"
     __word_separator = "⫽"
-    __rev_morse = {
-        value: key
-        for key, value in {
-            "a": __dot + __dash,
-            "b": __dash + __dot + __dot + __dot,
-            "c": __dash + __dot + __dash + __dot,
-            "d": __dash + __dot + __dot,
-            "e": __dot,
-            "f": __dot + __dot + __dash + __dot,
-            "g": __dash + __dash + __dot,
-            "h": __dot + __dot + __dot + __dot,
-            "i": __dot + __dot,
-            "j": __dot + __dash + __dash + __dash,
-            "k": __dash + __dot + __dash,
-            "l": __dot + __dash + __dot + __dot,
-            "m": __dash + __dash,
-            "n": __dash + __dot,
-            "o": __dash + __dash + __dash,
-            "p": __dot + __dash + __dash + __dot,
-            "q": __dash + __dash + __dot + __dash,
-            "r": __dot + __dash + __dot,
-            "s": __dot + __dot + __dot,
-            "t": __dash,
-            "u": __dot + __dot + __dash,
-            "v": __dot + __dot + __dot + __dash,
-            "w": __dot + __dash + __dash,
-            "x": __dash + __dot + __dot + __dash,
-            "y": __dash + __dot + __dash + __dash,
-            "z": __dash + __dash + __dot + __dot,
-            " ": __word_separator,
-            "": __symbol_separator,
-        }.items()
-    }
+    __rev_morse = {value: key for key, value in Morse.get_dict().items()}
 
     def __init__(self, characters: str):
+        """Creates Symbols from characters.
+
+        :param characters: String to store
+        """
         if not isinstance(characters, str):
             raise TypeError("Characters must be of type string")
         self.__characters = characters.lower()
-        if isinstance(list(self.__rev_semaphore.keys())[0], tuple):
-            self.__rev_semaphore = {
-                self.__directions[key[0] - 1] + self.__directions[key[1] - 1]: value
-                for key, value in self.__rev_semaphore.items()
-            }
 
     @classmethod
     def from_string(cls, string: str) -> str:
-        if isinstance(list(cls.__rev_semaphore.keys())[0], tuple):
-            cls.__rev_semaphore = {
-                cls.__directions[key[0] - 1] + cls.__directions[key[1] - 1]: value
-                for key, value in cls.__rev_semaphore.items()
-            }
+        """Decodes a string in either braille, morse, numbers or semaphore encoding.
+
+        :param string: String to decode
+        :return: Decoded string
+        """
         if not isinstance(string, str):
             raise TypeError("String needs to be a string")
         r = cls.__braille_from_string(string)
@@ -180,7 +106,7 @@ class Symbols:
                 begin = i * 4
                 if word[begin] != "(" or word[begin + 3] != ")":
                     return False, ""
-                if word[begin + 1 : begin + 3] not in cls.__rev_semaphore.keys():
+                if word[begin + 1 : begin + 3] not in cls.__rev_semaphore:
                     return False, ""
                 result += cls.__rev_semaphore[word[begin + 1 : begin + 3]]
             result += " "
@@ -219,19 +145,36 @@ class Symbols:
         return True, result
 
     def to_braille(self) -> Braille:
+        """
+
+        :return: Braille representation
+        """
         return Braille(self.__characters)
 
     def to_morse(self) -> Morse:
+        """
+
+        :return: Morse repesentation
+        """
         return Morse(self.__characters)
 
     def to_number_systems(self, base=10) -> NumberSystems:
+        """
+
+        :param base: Int base of the desired system (2, 10, 16)
+        :return: Numbers representation
+        """
         if not isinstance(base, int):
             raise TypeError("Base must an int")
-        if not base in [2, 10, 16]:
+        if base not in [2, 10, 16]:
             raise ValueError("Base must be 2, 10 or 16")
         return NumberSystems(self.__characters, base)
 
     def to_semaphore(self) -> Semaphore:
+        """
+
+        :return: Semaphore representation
+        """
         return Semaphore(self.__characters)
 
     def __getitem__(self, item) -> "Symbols":

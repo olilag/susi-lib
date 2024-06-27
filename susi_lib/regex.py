@@ -1,3 +1,7 @@
+"""Provides RegEx class for better work with regular epressions, create_regex function to create
+a RegEx instance based without the full knowledge of regular expression syntax.
+"""
+
 import re
 from typing import Union, List, Tuple
 from enum import Enum, auto
@@ -6,17 +10,26 @@ from susi_lib.utils import export
 
 @export
 class RegEx:
+    """Class to store and execute a regular expression on some provided data."""
 
     def __init__(self, pattern: str):
+        """Create RegEx instance.
+
+        :param pattern: Valid regular expression pattern
+        """
         if not isinstance(pattern, str):
             raise TypeError("Pattern needs to be a string")
         try:
             self.__re = re.compile(pattern, re.MULTILINE | re.IGNORECASE)
         except Exception as e:
-            raise ValueError("Invalid regex pattern: " + str(e))
+            raise ValueError("Invalid regex pattern: " + str(e)) from e
         self.__data = None
 
     def set_data(self, data: Union[List[str], str]):
+        """Sets data on which the regular expression will execute.
+
+        :param data: String containing a filename or a list[str] containing wanted data
+        """
         if isinstance(data, str):
             with open(data, "r", encoding="utf-8") as f:
                 self.__data = []
@@ -30,6 +43,10 @@ class RegEx:
             )
 
     def execute(self):
+        """Executes the regular expression on provided data. Need to provide data first.
+
+        :return: List of all found matches
+        """
         if self.__data is None:
             raise AttributeError("Did not set data to search before search")
 
@@ -37,14 +54,23 @@ class RegEx:
         return self.__re.findall(input_text)
 
     def get_pattern(self):
+        """Returns the regular expression pattern.
+
+        :return: RE pattern
+        """
         return self.__re.pattern
 
 
 @export
 class Selection(Enum):
+    """Enum to specify what to do with a set of characters when creating RE by create_regex."""
+
     NONE = auto()
+    """Don't do anything"""
     INVERT = auto()
+    """Invert the set"""
     ANY = auto()
+    """Override this set to match any character"""
 
 
 @export
@@ -52,15 +78,30 @@ def create_regex(
     *args: Tuple[str, Selection],
     length: Union[int, Tuple[int, int]] = None,
     letters: str = None,
-    invert: bool = None,
+    invert: bool = False,
 ) -> RegEx:
+    """Creates a RegEx object from arguments.
+
+    If args is specified, it will loop through it and create a pattern. Each tuple contains a set
+    of character and enum to specify what to do with it. Sets of characters are by default wanted.
+    The length of the wanted words will be the numbers of tuples provided.
+
+    If args is not specified, it will use remaining keyword arguments to create a RegEx object.
+    Length determines length of the words, letters a set of wanted letters and invert wether to
+    turn wanted letters into unwanted.
+    :param args: Set of wanted characters and enum to specify special action.
+    :param length: Int specifying legth of the word or a pair (begin, end) specifying a range
+    :param letters: Set of wanted letters
+    :param invert: Bool value, set to True to turn wanted letters to unwanted
+    :return: RegEx object with desired pattern
+    """
     if len(args) > 0:
         pattern = "^"
         for position in args:
             if (
                 len(position) != 2
                 or not isinstance(position[0], str)
-                or not isinstance(position[2], Selection)
+                or not isinstance(position[1], Selection)
             ):
                 raise TypeError("All arguments must be tuples (str, Selection)")
             part = position[0]
@@ -79,7 +120,7 @@ def create_regex(
             pattern += f"[{part}]"
         pattern += "$"
         return RegEx(pattern)
-    if length is None or letters is None or invert is None:
+    if length is None or letters is None:
         raise ValueError("You must set all arguments")
     if not isinstance(length, Union[int, tuple]):
         raise TypeError("Length must an int or pair (int, int)")

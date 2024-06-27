@@ -1,10 +1,22 @@
+"""Contains the Finder class for searching in text."""
+
 from typing import Callable, Literal, overload, List, Union
 from susi_lib.utils import export
 
 
 @export
 class Finder:
+    """Class for finding words that satisfy all user provided functions.
+
+    Supports lazy iteration over all matches.
+    """
+
     def __init__(self, inp: Union[str, List[str]], *functions: Callable[[str], bool]):
+        """Creates new Finder instance.
+
+        :param inp: Input data. Either a filename or a list[str] containing lines
+        :param functions: Functions that will determine wether a word is wanted or not
+        """
         if isinstance(inp, str):
             with open(inp, "r", encoding="utf-8") as f:
                 self.__text = []
@@ -48,18 +60,34 @@ class Finder:
                 yield word
 
     def find_first(self):
+        """Finds the first occurrence of a valid word and returns it.
+
+        :return: The found word or None if no valid words are found
+        """
         return self.__execute(True)
 
     def find_all(self):
+        """Finds all occurrences of a valid words and returns them.
+
+        :return: List of found valid words
+        """
         return self.__execute(False)
 
     def change_function(self, *functions: Callable[[str], bool]):
+        """Changes functions for other functions.
+
+        :param functions: New list of functions
+        """
         for f in functions:
             if not isinstance(f, Callable):
                 raise TypeError("All functions must be callable")
         self.__function = list(functions)
 
     def add_function(self, *functions: Callable[[str], bool]):
+        """Adds new functions to constraint valid words.
+
+        :param functions: New functions to add
+        """
         for f in functions:
             if not isinstance(f, Callable):
                 raise TypeError("All functions must be callable")

@@ -1,9 +1,17 @@
+"""Provides Morse class for representing a string in morse encoding."""
+
 from typing import List, Union
 from susi_lib.utils import export
 
 
 @export
 class Morse:
+    """Represents a string in morse.
+
+    Can be subscripted, iterated through, compared for equality, added with other Morse objects,
+    strings.. Can get its length by len function.
+    """
+
     def __init__(self, data: Union[str, "MorseSymbol", "MorseSequence"]):
         if isinstance(data, str):
             self.__data = MorseSymbol(data) if len(data) < 2 else MorseSequence(data)
@@ -11,9 +19,10 @@ class Morse:
             self.dashes = self.__data.dashes
         elif not isinstance(data, MorseSymbol) and not isinstance(data, MorseSequence):
             raise TypeError("Data must be a string")
-        self.__data = data
-        self.dots = self.__data.dots
-        self.dashes = self.__data.dashes
+        else:
+            self.__data = data
+            self.dots = self.__data.dots
+            self.dashes = self.__data.dashes
 
     def __eq__(self, other):
         if not isinstance(other, Morse):
@@ -40,14 +49,24 @@ class Morse:
         return self.__data[item]
 
     def get(self):
+        """
+
+        :return: Underlying sequence of MorseSymbols
+        """
         return self.__data.get()
 
     @staticmethod
     def get_dict():
+        """Returns dictionary for translating from chars to morse.
+
+        :return: Translation dictionary
+        """
         return MorseSymbol.get_dict()
 
 
 class MorseSymbol:
+    """Represents a single morse character."""
+
     __dot = "."
     __dash = "-"
     __symbol_separator = "/"
@@ -85,7 +104,7 @@ class MorseSymbol:
     __symbol_dict_rev = {(v, k) for k, v in __symbol_dict.items()}
 
     def __init__(self, character: str):
-        if not character.isalpha() and character != " ":
+        if not character.isalpha() and character != " " and character != "":
             raise ValueError("Character is not part of alphabet")
         if len(character) > 1:
             raise ValueError("Character is too long")
@@ -121,7 +140,11 @@ class MorseSymbol:
         return len(self.__symbol_dict[self.__character])
 
     def get(self):
-        return self
+        """
+
+        :return: Underlying sequence of MorseSymbols
+        """
+        return [self]
 
     def __getitem__(self, item):
         if item != 0:
@@ -130,15 +153,25 @@ class MorseSymbol:
 
     @classmethod
     def get_dict(cls):
+        """Returns dictionary for translating from chars to morse.
+
+        :return: Translation dictionary
+        """
         return cls.__symbol_dict
 
 
 class MorseSequence:
+    """Represents a sequence of morse characters."""
+
     def __init__(self, text="", init=None):
         if init is None:
             init = []
-        if not text.isalpha() and text != " ":
-            raise ValueError("Character is not part of alphabet")
+        if isinstance(text, str):
+            correct = True
+            for c in text.lower():
+                correct = correct and (c.isalpha() or c == " " or c == "")
+            if not correct:
+                raise ValueError("All chars need to be alphabetical or a space")
         self.__seq: List[MorseSymbol] = []
         if len(text) != 0:
             first = True
@@ -209,4 +242,8 @@ class MorseSequence:
         return self.__seq[item]
 
     def get(self):
+        """
+
+        :return: Underlying sequence of MorseSymbols
+        """
         return self.__seq

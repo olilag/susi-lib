@@ -1,5 +1,6 @@
+# pylint: skip-file
 import unittest
-from susi_lib.types.morse import Morse, MorseSymbol, MorseSequence
+from susi_lib.types.morse import Morse, MorseSymbol
 
 
 class MorseTestCase(unittest.TestCase):

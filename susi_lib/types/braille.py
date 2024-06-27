@@ -1,8 +1,12 @@
+"""Provides Braille class for work with braille."""
+
 from typing import Tuple, Union, List
 from susi_lib.utils import export
 
 
 class BrailleChar:
+    """Represent a single char in braille."""
+
     __symbol_dict = {
         "a": 0x1,
         "b": 0x3,
@@ -59,6 +63,10 @@ class BrailleChar:
         return not self == other
 
     def get_points(self) -> Tuple[bool, bool, bool, bool, bool, bool]:
+        """Return a 6-tuple with bool values specifying which circles are black.
+
+        :return: 6-tuple representing black circles
+        """
         if self.__char == " ":
             return (False,) * 6
         return tuple(
@@ -67,12 +75,26 @@ class BrailleChar:
 
     @classmethod
     def get_dict(cls):
+        """Returns dictionary for translating from chars to unicode braille values.
+
+        :return: Translation dictionary
+        """
         return cls.__symbol_dict
 
 
 @export
 class Braille:
+    """Represents a string in braille.
+
+    Can be subscripted, iterated through, compared for equality, added with other Braille objects,
+    strings or BrailleChars. Can get its length by len function.
+    """
+
     def __init__(self, characters: Union[str, List[BrailleChar]]):
+        """Creates Braille object from characters.
+
+        :param characters: String of aplhabet and spaces
+        """
         if isinstance(characters, str):
             correct = True
             for c in characters:
@@ -113,4 +135,8 @@ class Braille:
 
     @staticmethod
     def get_dict():
+        """Returns dictionary for translating from chars to unicode braille values.
+
+        :return: Translation dictionary
+        """
         return BrailleChar.get_dict()

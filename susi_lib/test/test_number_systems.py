@@ -1,3 +1,4 @@
+# pylint: skip-file
 import unittest
 from susi_lib.types.number_systems import NumberSystems, NumberChar
 
