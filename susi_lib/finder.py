@@ -1,6 +1,8 @@
 from typing import Callable, Literal, overload, List, Union
+from susi_lib.utils import export
 
 
+@export
 class Finder:
     def __init__(self, inp: Union[str, List[str]], *functions: Callable[[str], bool]):
         if isinstance(inp, str):
