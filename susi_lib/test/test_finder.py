@@ -9,12 +9,16 @@ class MyTestCase(unittest.TestCase):
         self.f1 = is_palindrome
         self.f2 = lambda word: len(word) == 5
 
-    def test_finder(self):
+    def test_find_first(self):
         finder = Finder(self.text, self.f2)
         self.assertEqual(finder.find_first(), "Lorem")
+
+    def test_find_all(self):
+        finder = Finder(self.text, self.f2)
         self.assertEqual(finder.find_all(), ["Lorem", "ipsum", "lolol"])
-        for found, exp in zip(finder, ["Lorem", "ipsum", "lolol"]):
-            self.assertEqual(found, exp)
+
+    def test_modify_function(self):
+        finder = Finder(self.text, self.f2)
         finder.change_function(self.f1)
         self.assertEqual(finder.find_first(), "lolol")
         self.assertEqual(finder.find_all(), ["lolol"])
@@ -25,6 +29,10 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(finder.find_first(), None)
         self.assertEqual(finder.find_all(), [])
 
+    def test_iterate(self):
+        finder = Finder(self.text, self.f2)
+        for found, exp in zip(finder, ["Lorem", "ipsum", "lolol"]):
+            self.assertEqual(found, exp)
 
 
 if __name__ == "__main__":
