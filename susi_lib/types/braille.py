@@ -91,7 +91,7 @@ class Braille:
     def __init__(self, characters: Union[str, List[BrailleChar]]):
         """Creates Braille object from characters.
 
-        :param characters: String of aplhabet and spaces
+        :param characters: String of alphabet and spaces
         """
         if isinstance(characters, str):
             correct = True

@@ -152,7 +152,7 @@ class Symbols:
     def to_morse(self) -> Morse:
         """
 
-        :return: Morse repesentation
+        :return: Morse representation
         """
         return Morse(self.__characters)
 

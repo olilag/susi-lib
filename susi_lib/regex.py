@@ -1,4 +1,4 @@
-"""Provides RegEx class for better work with regular epressions, create_regex function to create
+"""Provides RegEx class for better work with regular expressions, create_regex function to create
 a RegEx instance based without the full knowledge of regular expression syntax.
 """
 
@@ -86,7 +86,7 @@ def create_regex(
     Length determines length of the words, letters a set of wanted letters and invert wether to
     turn wanted letters into unwanted.
     :param args: Set of wanted characters and enum to specify special action.
-    :param length: Int specifying legth of the word or a pair (begin, end) specifying a range
+    :param length: Int specifying length of the word or a pair (begin, end) specifying a range
     :param letters: Set of wanted letters
     :param invert: Bool value, set to True to turn wanted letters to unwanted
     :return: RegEx object with desired pattern
