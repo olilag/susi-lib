@@ -7,7 +7,9 @@ class Finder:
     def __init__(self, inp: Union[str, List[str]], *functions: Callable[[str], bool]):
         if isinstance(inp, str):
             with open(inp, "r", encoding="utf-8") as f:
-                self.__text = f.readlines()
+                self.__text = []
+                for line in f:
+                    self.__text.append(line.strip())
         elif isinstance(inp, list):
             self.__text = inp
         else:
