@@ -1,8 +1,12 @@
+import re
 import unittest
 from susi_lib.regex import *
 
 
 class MyTestCase(unittest.TestCase):
+    def setUp(self):
+        self.text = "Lorem ipsum lolol sit amet".split(" ")
+
     def test_create_regex(self):
         self.assertEqual(
             create_regex(
@@ -30,7 +34,18 @@ class MyTestCase(unittest.TestCase):
             )
 
     def test_regex(self):
-        pass
+        self.assertEqual(RegEx("^[asv]{4,7}$").get_pattern(), "^[asv]{4,7}$")
+        with self.assertRaises(ValueError):
+            _ = RegEx("^[]{4,8}$")
+
+    def test_regex_find(self):
+        r = RegEx("^.*[ae].*$")
+        r.set_data(self.text)
+        self.assertEqual(r.execute(), ["Lorem", "amet"])
+        r.set_data("lorem.txt")
+        with open("lorem.txt", "r", encoding="utf-8") as f:
+            exp = re.findall("^.*[ae].*$", "".join(f.readlines()), re.MULTILINE | re.IGNORECASE)
+        self.assertEqual(r.execute(), exp)
 
 
 if __name__ == "__main__":

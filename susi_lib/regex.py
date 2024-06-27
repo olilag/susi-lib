@@ -19,7 +19,9 @@ class RegEx:
     def set_data(self, data: Union[List[str], str]):
         if isinstance(data, str):
             with open(data, "r", encoding="utf-8") as f:
-                data = f.readlines()
+                data = []
+                for line in f:
+                    data.append(line.strip())
         self.__data = data
 
     def execute(self):
