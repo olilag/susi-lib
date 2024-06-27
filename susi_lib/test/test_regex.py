@@ -44,7 +44,9 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(r.execute(), ["Lorem", "amet"])
         r.set_data("lorem.txt")
         with open("lorem.txt", "r", encoding="utf-8") as f:
-            exp = re.findall("^.*[ae].*$", "".join(f.readlines()), re.MULTILINE | re.IGNORECASE)
+            exp = re.findall(
+                "^.*[ae].*$", "".join(f.readlines()), re.MULTILINE | re.IGNORECASE
+            )
         self.assertEqual(r.execute(), exp)
 
 

@@ -9,16 +9,15 @@ class Morse:
             self.__data = MorseSymbol(data) if len(data) < 2 else MorseSequence(data)
             self.dots = self.__data.dots
             self.dashes = self.__data.dashes
-            return
-        if not isinstance(data, MorseSymbol) and not isinstance(data, MorseSequence):
-            raise TypeError
+        elif not isinstance(data, MorseSymbol) and not isinstance(data, MorseSequence):
+            raise TypeError("Data must be a string")
         self.__data = data
         self.dots = self.__data.dots
         self.dashes = self.__data.dashes
 
     def __eq__(self, other):
         if not isinstance(other, Morse):
-            raise TypeError
+            raise TypeError("Can't compare these two types")
         return self.__data == other.__data
 
     def __ne__(self, other):
@@ -31,7 +30,7 @@ class Morse:
         if isinstance(other, str):
             other = Morse(other)
         if not isinstance(other, Morse):
-            raise TypeError
+            raise TypeError("Can't add these two types")
         return Morse(self.__data + other.__data)
 
     def __len__(self):
@@ -86,8 +85,10 @@ class MorseSymbol:
     __symbol_dict_rev = {(v, k) for k, v in __symbol_dict.items()}
 
     def __init__(self, character: str):
-        if not character.isalpha() and character != " " and len(character) > 1:
+        if not character.isalpha() and character != " ":
             raise ValueError("Character is not part of alphabet")
+        if len(character) > 1:
+            raise ValueError("Character is too long")
         self.__character = character.lower()
         self.dots = self.__symbol_dict[self.__character].count(self.__dot)
         self.dashes = self.__symbol_dict[self.__character].count(self.__dash)
@@ -98,7 +99,7 @@ class MorseSymbol:
     def __eq__(self, other):
         if isinstance(other, MorseSymbol):
             return self.__character == other.__character
-        raise TypeError
+        raise TypeError("Can't compare these two types")
 
     def __ne__(self, other):
         return not self == other
@@ -123,8 +124,8 @@ class MorseSymbol:
         return self
 
     def __getitem__(self, item):
-        if item > 0:
-            raise IndexError
+        if item != 0:
+            raise IndexError("Only valid index is 0")
         return self
 
     @classmethod
@@ -136,6 +137,8 @@ class MorseSequence:
     def __init__(self, text="", init=None):
         if init is None:
             init = []
+        if not text.isalpha() and text != " ":
+            raise ValueError("Character is not part of alphabet")
         self.__seq: List[MorseSymbol] = []
         if len(text) != 0:
             first = True
@@ -185,7 +188,7 @@ class MorseSequence:
 
     def __eq__(self, other):
         if not isinstance(other, MorseSequence):
-            raise TypeError
+            raise TypeError("Can't compare these two types")
         for left, right in zip(self.__seq, other.__seq):
             if left != right:
                 return False

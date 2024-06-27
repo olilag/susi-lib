@@ -130,7 +130,7 @@ class Symbols:
 
     def __init__(self, characters: str):
         if not isinstance(characters, str):
-            raise TypeError
+            raise TypeError("Characters must be of type string")
         self.__characters = characters.lower()
         if isinstance(list(self.__rev_semaphore.keys())[0], tuple):
             self.__rev_semaphore = {
@@ -146,7 +146,7 @@ class Symbols:
                 for key, value in cls.__rev_semaphore.items()
             }
         if not isinstance(string, str):
-            raise TypeError
+            raise TypeError("String needs to be a string")
         r = cls.__braille_from_string(string)
         if r[0]:
             return r[1].strip()
@@ -159,7 +159,7 @@ class Symbols:
         r = cls.__morse_from_string(string)
         if r[0]:
             return r[1].strip()
-        raise ValueError
+        raise ValueError("Can't decode this string")
 
     @classmethod
     def __braille_from_string(cls, string: str):
@@ -225,6 +225,10 @@ class Symbols:
         return Morse(self.__characters)
 
     def to_number_systems(self, base=10) -> NumberSystems:
+        if not isinstance(base, int):
+            raise TypeError("Base must an int")
+        if not base in [2, 10, 16]:
+            raise ValueError("Base must be 2, 10 or 16")
         return NumberSystems(self.__characters, base)
 
     def to_semaphore(self) -> Semaphore:
@@ -241,7 +245,7 @@ class Symbols:
 
     def __eq__(self, other):
         if not isinstance(other, Symbols):
-            raise TypeError
+            raise TypeError("Can't compare these two types")
         return self.__characters == other.__characters
 
     def __ne__(self, other):
@@ -252,4 +256,4 @@ class Symbols:
             return Symbols(self.__characters + other)
         if isinstance(other, Symbols):
             return Symbols(self.__characters + other.__characters)
-        raise TypeError
+        raise TypeError("Can't add these two types")

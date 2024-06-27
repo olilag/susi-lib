@@ -13,7 +13,12 @@ class Finder:
         elif isinstance(inp, list):
             self.__text = inp
         else:
-            raise TypeError
+            raise TypeError(
+                "Inp must be a string with filename or list[str] with some data"
+            )
+        for f in functions:
+            if not isinstance(f, Callable):
+                raise TypeError("All functions must be callable")
         self.__function = list(functions)
 
     def __valid_word(self, word: str):
@@ -49,7 +54,13 @@ class Finder:
         return self.__execute(False)
 
     def change_function(self, *functions: Callable[[str], bool]):
+        for f in functions:
+            if not isinstance(f, Callable):
+                raise TypeError("All functions must be callable")
         self.__function = list(functions)
 
     def add_function(self, *functions: Callable[[str], bool]):
+        for f in functions:
+            if not isinstance(f, Callable):
+                raise TypeError("All functions must be callable")
         self.__function.extend(functions)

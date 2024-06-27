@@ -68,7 +68,7 @@ class SemaphoreChar:
     def __eq__(self, other):
         if isinstance(other, SemaphoreChar):
             return self.__char == other.__char
-        raise TypeError
+        raise TypeError("Can't compare these two types")
 
     def __ne__(self, other):
         return not self == other
@@ -91,12 +91,12 @@ class Semaphore:
             for c in characters.lower():
                 correct = correct and (c.isalpha() or c == " ")
             if not correct:
-                raise ValueError
-            self.__seq = [SemaphoreChar(c) for c in characters]
+                raise ValueError("All chars need to be alphabetical or a space")
+            self.__seq = [SemaphoreChar(c) for c in characters.lower()]
         elif isinstance(characters, list):
             self.__seq = characters
         else:
-            raise TypeError
+            raise TypeError("Characters must be of type string")
 
     def __str__(self):
         return "".join(str(c) for c in self.__seq)
@@ -114,12 +114,12 @@ class Semaphore:
             return Semaphore(self.__seq + other.__seq)
         if isinstance(other, SemaphoreChar):
             return Semaphore(self.__seq + [other])
-        raise TypeError
+        raise TypeError("Can't add these two types")
 
     def __eq__(self, other):
         if isinstance(other, Semaphore):
             return self.__seq == other.__seq
-        raise TypeError
+        raise TypeError("Can't compare these two types")
 
     def __ne__(self, other):
         return not self == other

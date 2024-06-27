@@ -42,7 +42,7 @@ class BrailleChar:
 
     def __getitem__(self, item) -> bool:
         if 0 > item or item > 5:
-            raise IndexError
+            raise IndexError("Index must be from 0-5")
         if self.__char == " ":
             return False
         return (self.__symbol_dict[self.__char] >> item) % 2 == 1
@@ -53,12 +53,10 @@ class BrailleChar:
     def __eq__(self, other):
         if isinstance(other, BrailleChar):
             return self.__char == other.__char
-        raise TypeError
+        raise TypeError("Can't compare these two types")
 
     def __ne__(self, other):
-        if isinstance(other, BrailleChar):
-            return not self == other
-        raise TypeError
+        return not self == other
 
     def get_points(self) -> Tuple[bool, bool, bool, bool, bool, bool]:
         if self.__char == " ":
@@ -77,15 +75,15 @@ class Braille:
     def __init__(self, characters: Union[str, List[BrailleChar]]):
         if isinstance(characters, str):
             correct = True
-            for c in characters.lower():
+            for c in characters:
                 correct = correct and (c.isalpha() or c == " ")
             if not correct:
-                raise ValueError
-            self.__seq = [BrailleChar(c) for c in characters]
+                raise ValueError("All chars need to be alphabetical or a space")
+            self.__seq = [BrailleChar(c) for c in characters.lower()]
         elif isinstance(characters, list):
             self.__seq = characters
         else:
-            raise TypeError
+            raise TypeError("Characters must be of type string")
 
     def __str__(self):
         return "".join(str(c) for c in self.__seq)
@@ -93,7 +91,7 @@ class Braille:
     def __eq__(self, other):
         if isinstance(other, Braille):
             return self.__seq == other.__seq
-        raise TypeError
+        raise TypeError("Can't compare these two types")
 
     def __ne__(self, other):
         return not self == other
@@ -111,7 +109,7 @@ class Braille:
             return Braille(self.__seq + other.__seq)
         if isinstance(other, BrailleChar):
             return Braille(self.__seq + [other])
-        raise TypeError
+        raise TypeError("Can't add these two types together")
 
     @staticmethod
     def get_dict():

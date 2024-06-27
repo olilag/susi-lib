@@ -26,7 +26,7 @@ class NumberChar:
 
     def __eq__(self, other):
         if not isinstance(other, NumberChar):
-            raise TypeError
+            raise TypeError("Can't compare these two types")
         return self.__char == other.__char and self.__base == other.__base
 
     def __ne__(self, other):
@@ -40,19 +40,23 @@ class NumberChar:
 @export
 class NumberSystems:
     def __init__(self, characters: Union[str, List[NumberChar]], base=10):
+        if not isinstance(base, int):
+            raise TypeError("Base must an int")
+        if not base in [2, 10, 16]:
+            raise ValueError("Base must be 2, 10 or 16")
         if isinstance(characters, str):
             correct = True
             for c in characters.lower():
                 correct = correct and (c.isalpha() or c == " ")
             if not correct:
-                raise ValueError
+                raise ValueError("All chars need to be alphabetical or a space")
             self.__base = base
-            self.__seq = [NumberChar(c, self.__base) for c in characters]
+            self.__seq = [NumberChar(c, self.__base) for c in characters.lower()]
         elif isinstance(characters, list):
             self.__base = base
             self.__seq = characters
         else:
-            raise TypeError
+            raise TypeError("Characters must be of type string")
 
     def __str__(self):
         return ", ".join(
@@ -62,7 +66,7 @@ class NumberSystems:
     def __eq__(self, other):
         if isinstance(other, NumberSystems):
             return self.__seq == other.__seq and self.__base == other.__base
-        raise TypeError
+        raise TypeError("Can't compare these two types")
 
     def __ne__(self, other):
         return not self == other
@@ -86,11 +90,13 @@ class NumberSystems:
             return ret
         if isinstance(other, NumberChar):
             return NumberSystems(self.__seq + [other], self.__base)
-        raise TypeError
+        raise TypeError("Can't add these two types")
 
     def change_base(self, base: int):
         if not isinstance(base, int):
-            raise TypeError
+            raise TypeError("Base must an int")
+        if not base in [2, 10, 16]:
+            raise ValueError("Base must be 2, 10 or 16")
         self.__base = base
         for n in self.__seq:
             n.change_base(self.__base)
