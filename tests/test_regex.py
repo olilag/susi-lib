@@ -1,5 +1,6 @@
 # pylint: skip-file
 import re
+import os
 import unittest
 from susi_lib.regex import create_regex, RegEx, Selection
 
@@ -7,6 +8,7 @@ from susi_lib.regex import create_regex, RegEx, Selection
 class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.text = "Lorem ipsum lolol sit amet".split(" ")
+        self.file_location = os.path.dirname(os.path.realpath(__file__)) + "/lorem.txt"
 
     def test_create_regex(self):
         self.assertEqual(
@@ -43,8 +45,8 @@ class MyTestCase(unittest.TestCase):
         r = RegEx("^.*[ae].*$")
         r.set_data(self.text)
         self.assertEqual(r.execute(), ["Lorem", "amet"])
-        r.set_data("susi_lib/test/lorem.txt")
-        with open("susi_lib/test/lorem.txt", "r", encoding="utf-8") as f:
+        r.set_data(self.file_location)
+        with open(self.file_location, "r", encoding="utf-8") as f:
             exp = re.findall(
                 "^.*[ae].*$", "".join(f.readlines()), re.MULTILINE | re.IGNORECASE
             )

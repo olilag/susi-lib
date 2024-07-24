@@ -1,5 +1,6 @@
 # pylint: skip-file
 import unittest
+import os
 from susi_lib.finder import Finder
 from susi_lib.functions import is_palindrome
 
@@ -9,6 +10,7 @@ class MyTestCase(unittest.TestCase):
         self.text = "Lorem ipsum lolol sit amet".split(" ")
         self.f1 = is_palindrome
         self.f2 = lambda word: len(word) == 5
+        self.file_location = os.path.dirname(os.path.realpath(__file__)) + "/lorem.txt"
 
     def test_find_first(self):
         finder = Finder(self.text, self.f2)
@@ -36,7 +38,7 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(found, exp)
 
     def test_from_file(self):
-        finder = Finder("susi_lib/test/lorem.txt", self.f2)
+        finder = Finder(self.file_location, self.f2)
         self.assertEqual(finder.find_first(), "Lorem")
         exp = [
             "Lorem",
