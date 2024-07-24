@@ -5,7 +5,7 @@ from os import path
 
 HERE = path.abspath(path.dirname(__file__))
 
-with open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
+with open(path.join(HERE, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
@@ -24,7 +24,7 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.10",
-        "Operating System :: OS Independent"
+        "Operating System :: OS Independent",
     ],
     packages=find_packages(),
     include_package_data=True,
