@@ -1,6 +1,7 @@
 """Contains some useful functions"""
 
 from susi_lib.types import Symbols
+from enum import Enum, auto
 
 
 def is_palindrome(word):
@@ -75,3 +76,31 @@ def encode_numbers(string: str, base=10):
     if base not in [2, 10, 16]:
         raise ValueError("Valid values for base are 2, 10, 16")
     return str(Symbols(string).to_number_systems(base))
+
+
+class Encoding(Enum):
+    MORSE = auto()
+    BRAILLE = auto()
+    SEMAPHORE = auto()
+    NUMBERS = auto()
+
+
+def encode(string: str, encoding: Encoding, base: int = 10):
+    """Encode the given string into desired encoding
+
+    :param string: The string to encode (should contain only alphabetical chars and spaces)
+    :param encoding: Desired encoding, MORSE, BRAILLE, SEMAPHORE, NUMBERS
+    :param base: The base of the number system (2, 10, 16), needed only for NUMBERS
+    :return: Encoded string
+    """
+    match (encoding):
+        case Encoding.MORSE:
+            return encode_morse(string)
+        case Encoding.BRAILLE:
+            return encode_braille(string)
+        case Encoding.SEMAPHORE:
+            return encode_semaphore(string)
+        case Encoding.NUMBERS:
+            return encode_numbers(string, base)
+        case _:
+            raise ValueError("Invalid enum value")
