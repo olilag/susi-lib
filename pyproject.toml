@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling", "hatch-vcs"]
+requires = ["hatchling>=1.25.0", "hatch-vcs>=0.4.0"]
 build-backend = "hatchling.build"
 
 [project]
@@ -29,7 +29,7 @@ Homepage = "https://github.com/olilag/susi-lib"
 source = "vcs"
 
 [tool.hatch.build.hooks.vcs]
-version-file = "src/hatch/_version.py"
+version-file = "src/susi_lib/_version.py"
 
 [tool.hatch.build.targets.sdist]
 exclude = [
