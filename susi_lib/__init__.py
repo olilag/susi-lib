@@ -3,5 +3,7 @@ Provides class for lazy word finding Finder, class and function to encapsulate r
 Provides a couple of useful functions is susi_lib.functions.
 """
 
+import susi_lib.functions
+import susi_lib.types
 from susi_lib.regex import RegEx, Selection, create_regex
 from susi_lib.finder import Finder
