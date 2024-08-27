@@ -1,6 +1,6 @@
 """Provides Semaphore class for representing strings in semaphore encoding."""
 
-from typing import Tuple, Union, List
+from typing import List, Tuple, Union
 
 
 class SemaphoreChar:

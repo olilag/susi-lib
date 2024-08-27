@@ -1,6 +1,6 @@
 """Provides NumberSystems class for representing strings as numbers."""
 
-from typing import Union, List
+from typing import List, Union
 
 
 class NumberChar:

@@ -5,5 +5,5 @@ Provides a couple of useful functions is susi_lib.functions.
 
 import susi_lib.functions
 import susi_lib.types
-from susi_lib.regex import RegEx, Selection, create_regex
 from susi_lib.finder import Finder
+from susi_lib.regex import RegEx, Selection, create_regex

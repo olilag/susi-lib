@@ -1,6 +1,7 @@
 # pylint: skip-file
 import unittest
-from susi_lib.types.number_systems import NumberSystems, NumberChar
+
+from susi_lib.types.number_systems import NumberChar, NumberSystems
 
 
 class NumberSystemsCase(unittest.TestCase):

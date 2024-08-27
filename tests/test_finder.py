@@ -1,6 +1,7 @@
 # pylint: skip-file
-import unittest
 import os
+import unittest
+
 from susi_lib.finder import Finder
 from susi_lib.functions import is_palindrome
 

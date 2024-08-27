@@ -1,8 +1,9 @@
 # pylint: skip-file
-import re
 import os
+import re
 import unittest
-from susi_lib.regex import create_regex, RegEx, Selection
+
+from susi_lib.regex import RegEx, Selection, create_regex
 
 
 class MyTestCase(unittest.TestCase):

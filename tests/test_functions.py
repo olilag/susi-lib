@@ -1,5 +1,6 @@
 # pylint: skip-file
 import unittest
+
 from susi_lib.functions import is_palindrome
 from susi_lib.types import Symbols
 

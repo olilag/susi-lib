@@ -1,6 +1,7 @@
 # pylint: skip-file
 import unittest
-from susi_lib.types import Symbols, Braille, Semaphore, Morse, NumberSystems
+
+from susi_lib.types import Braille, Morse, NumberSystems, Semaphore, Symbols
 
 
 class SymbolsTestCase(unittest.TestCase):

@@ -1,5 +1,6 @@
 # pylint: skip-file
 import unittest
+
 from susi_lib.types.braille import Braille, BrailleChar
 
 

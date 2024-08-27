@@ -1,6 +1,6 @@
 """Provides Braille class for work with braille."""
 
-from typing import Tuple, Union, List
+from typing import List, Tuple, Union
 
 
 class BrailleChar:
@@ -67,7 +67,14 @@ class BrailleChar:
         :return: 6-tuple representing black circles
         """
         if self.__char == " ":
-            return (False,) * 6
+            return (
+                False,
+                False,
+                False,
+                False,
+                False,
+                False,
+            )
         return tuple(
             ((self.__symbol_dict[self.__char] >> i) % 2 == 1 for i in range(6))
         )

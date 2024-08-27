@@ -1,7 +1,8 @@
 """Contains some useful functions"""
 
-from susi_lib.types import Symbols
 from enum import Enum, auto
+
+from susi_lib.types import Symbols
 
 
 def is_palindrome(word):

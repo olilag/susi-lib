@@ -1,6 +1,6 @@
 """Contains the Finder class for searching in text."""
 
-from typing import Callable, Literal, overload, List, Union
+from typing import Callable, List, Literal, Union, overload
 
 
 class Finder:

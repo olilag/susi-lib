@@ -3,8 +3,8 @@ a RegEx instance based without the full knowledge of regular expression syntax.
 """
 
 import re
-from typing import Union, List, Tuple
 from enum import Enum, auto
+from typing import List, Tuple, Union
 
 
 class RegEx:
