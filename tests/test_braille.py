@@ -35,9 +35,9 @@ class BrailleTestCase(unittest.TestCase):
             self.meno[3].get_points(), (True, False, True, False, True, False)
         )
         with self.assertRaises(IndexError):
-            _ = self.a[0][6]
+            _ = self.a[0][7]
         with self.assertRaises(IndexError):
-            _ = self.a[0][-1]
+            _ = self.a[0][0]
 
     def test_add(self):
         self.assertEqual(str(self.a + self.b), "⠁⠃")

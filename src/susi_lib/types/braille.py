@@ -44,11 +44,11 @@ class BrailleChar:
         self.__char = character.lower()
 
     def __getitem__(self, item) -> bool:
-        if 0 > item or item > 5:
-            raise IndexError("Index must be from 0-5")
+        if 1 > item or item > 6:
+            raise IndexError("Index must be from 1-6")
         if self.__char == " ":
             return False
-        return (self.__symbol_dict[self.__char] >> item) % 2 == 1
+        return (self.__symbol_dict[self.__char] >> (item - 1)) % 2 == 1
 
     def __str__(self):
         return chr(self.__symbol_dict[self.__char] + 0x2800)
