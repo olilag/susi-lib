@@ -1,7 +1,7 @@
 # pylint: skip-file
 import unittest
 
-from susi_lib.functions import is_palindrome
+from susi_lib.functions import find_anagrams, is_palindrome
 from susi_lib.types import Symbols
 
 
@@ -11,6 +11,21 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(is_palindrome("abc"), False)
         self.assertEqual(is_palindrome([1, 2, 1]), True)
         self.assertEqual(is_palindrome(Symbols("tacocat")), True)
+
+    def test_find_anagrams(self):
+        self.word_list = "makrela reklama kamarat abeceda kokos skoko".split(" ")
+        self.assertEqual(
+            find_anagrams("karamel", self.word_list), ["makrela", "reklama"]
+        )
+        self.assertEqual(find_anagrams("abc", self.word_list), [])
+        self.assertEqual(find_anagrams("kokos", self.word_list), ["skoko"])
+
+        with self.assertRaises(TypeError):
+            find_anagrams(1, self.word_list)
+        with self.assertRaises(TypeError):
+            find_anagrams("kokos", "lol")
+        with self.assertRaises(TypeError):
+            find_anagrams("kokos", [1, 2, 3])
 
 
 if __name__ == "__main__":

@@ -105,3 +105,28 @@ def encode(string: str, encoding: Encoding, base: int = 10):
             return encode_numbers(string, base)
         case _:
             raise ValueError("Invalid enum value")
+
+
+def _calculate_freq(word: str):
+    word_freq = {}
+    for c in word:
+        word_freq[c] = word_freq.get(c, 0) + 1
+    return word_freq
+
+
+def find_anagrams(word: str, word_list: list[str]):
+    if not isinstance(word, str):
+        raise TypeError("Word must be a string")
+    if not isinstance(word_list, list):
+        raise TypeError("Word_list must be a list")
+    if not all(isinstance(val, str) for val in word_list):
+        raise TypeError("Word_list must be a list of strings")
+    filtered_words = [w for w in word_list if len(w) == len(word) and w != word]
+    word_freq = _calculate_freq(word)
+    found_words: list[str] = []
+
+    for w in filtered_words:
+        if word_freq == _calculate_freq(w):
+            found_words.append(w)
+
+    return found_words
