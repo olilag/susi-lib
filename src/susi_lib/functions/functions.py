@@ -30,7 +30,7 @@ def decode(string: str):
     return Symbols.from_string(string)
 
 
-def encode_morse(string: str):
+def _encode_morse(string: str):
     """Encode the given string into morse.
 
     :param string: The string to encode (should contain only alphabetical chars and spaces)
@@ -41,7 +41,7 @@ def encode_morse(string: str):
     return str(Symbols(string).to_morse())
 
 
-def encode_braille(string: str):
+def _encode_braille(string: str):
     """Encode the given string into braille.
 
     :param string: The string to encode (should contain only alphabetical chars and spaces)
@@ -52,7 +52,7 @@ def encode_braille(string: str):
     return str(Symbols(string).to_braille())
 
 
-def encode_semaphore(string: str):
+def _encode_semaphore(string: str):
     """Encode the given string into semaphore.
 
     :param string: The string to encode (should contain only alphabetical chars and spaces)
@@ -63,7 +63,7 @@ def encode_semaphore(string: str):
     return str(Symbols(string).to_semaphore())
 
 
-def encode_numbers(string: str, base=10):
+def _encode_numbers(string: str, base=10):
     """Encode the given string into numbers of given base
 
     :param string: The string to encode (should contain only alphabetical chars and spaces)
@@ -96,13 +96,13 @@ def encode(string: str, encoding: Encoding, base: int = 10):
     """
     match (encoding):
         case Encoding.MORSE:
-            return encode_morse(string)
+            return _encode_morse(string)
         case Encoding.BRAILLE:
-            return encode_braille(string)
+            return _encode_braille(string)
         case Encoding.SEMAPHORE:
-            return encode_semaphore(string)
+            return _encode_semaphore(string)
         case Encoding.NUMBERS:
-            return encode_numbers(string, base)
+            return _encode_numbers(string, base)
         case _:
             raise ValueError("Invalid enum value")
 
