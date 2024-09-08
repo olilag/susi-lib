@@ -115,7 +115,7 @@ class NumberSystems:
         """
         if not isinstance(base, int):
             raise TypeError("Base must an int")
-        if not base in [2, 10, 16]:
+        if base not in [2, 10, 16]:
             raise ValueError("Base must be 2, 10 or 16")
         self.__base = base
         for n in self.__seq:
