@@ -4,13 +4,13 @@ a RegEx instance based without the full knowledge of regular expression syntax.
 
 import re
 from enum import Enum, auto
-from typing import List, Tuple, Union
+from typing import Iterable, Tuple, Union
 
 
 class RegEx:
     """Class to store and execute a regular expression on some provided data."""
 
-    def __init__(self, pattern: str):
+    def __init__(self, pattern: str, data: Union[Iterable[str], str, None] = None):
         """Create RegEx instance.
 
         :param pattern: Valid regular expression pattern
@@ -21,9 +21,10 @@ class RegEx:
             self.__re = re.compile(pattern, re.MULTILINE | re.IGNORECASE)
         except Exception as e:
             raise ValueError("Invalid regex pattern: " + str(e)) from e
-        self.__data = None
+        if data is not None:
+            self.set_data(data)
 
-    def set_data(self, data: Union[List[str], str]):
+    def set_data(self, data: Union[Iterable[str], str]):
         """Sets data on which the regular expression will execute.
 
         :param data: String containing a filename or a list[str] containing wanted data
@@ -72,6 +73,7 @@ class Selection(Enum):
 
 def create_regex(
     *args: Tuple[str, Selection],
+    data: Union[Iterable[str], str, None] = None,
     length: Union[int, Tuple[int, int]] = None,
     letters: str = None,
     invert: bool = False,
@@ -115,7 +117,7 @@ def create_regex(
                     raise ValueError("Invalid enum value")
             pattern += f"[{part}]"
         pattern += "$"
-        return RegEx(pattern)
+        return RegEx(pattern, data)
     if length is None or letters is None:
         raise ValueError("You must set all arguments")
     if not isinstance(length, Union[int, tuple]):
@@ -129,4 +131,4 @@ def create_regex(
         f"{{{length}}}" if isinstance(length, int) else f"{{{length[0]},{length[1]}}}"
     )
     pattern = f"^[{inv}{letters}]{quantify}$"
-    return RegEx(pattern)
+    return RegEx(pattern, data)
