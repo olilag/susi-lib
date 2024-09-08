@@ -60,10 +60,10 @@ dependencies = [
 
 [tool.hatch.envs.style.scripts]
 check = [
-  "flake8 .",
-  "black --check --diff .",
-  "isort --check-only --diff .",
-  "pylint ."
+  "- flake8 .",
+  "- black --check --diff .",
+  "- isort --check-only --diff .",
+  "- pylint src tests"
 ]
 format = [
   "isort .",
