@@ -25,6 +25,9 @@ dynamic = ["version"]
 [project.urls]
 Homepage = "https://github.com/olilag/susi-lib"
 
+[project.scripts]
+susi-word-finder = "susi_lib.word_finder_cli:main"
+
 [tool.hatch.version]
 source = "vcs"
 
