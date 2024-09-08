@@ -107,15 +107,16 @@ def create_regex(
                 case Selection.NONE:
                     if len(part) == 0:
                         raise ValueError("Set of letters can't be empty")
+                    part = f"[{part}]"
                 case Selection.INVERT:
                     if len(part) == 0:
                         raise ValueError("Set of letters can't be empty")
-                    part = "^" + part
+                    part = f"[^{part}]"
                 case Selection.ANY:
                     part = "."
                 case _:
                     raise ValueError("Invalid enum value")
-            pattern += f"[{part}]"
+            pattern += f"{part}"
         pattern += "$"
         return RegEx(pattern, data)
     if length is None or letters is None:

@@ -16,7 +16,7 @@ class MyTestCase(unittest.TestCase):
             create_regex(
                 ("abc", Selection.NONE), ("def", Selection.INVERT), ("", Selection.ANY)
             ).get_pattern(),
-            "^[abc][^def][.]$",
+            "^[abc][^def].$",
         )
         self.assertEqual(
             create_regex(length=5, letters="auto", invert=False).get_pattern(),
