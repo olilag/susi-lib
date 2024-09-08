@@ -39,6 +39,8 @@ exclude = [
   "/.github",
   "/docs",
   "/tests",
+  ".pre-commit-config.yaml",
+  ".gitattributes"
 ]
 
 [tool.hatch.build.targets.wheel]
