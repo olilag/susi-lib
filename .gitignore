@@ -1,6 +1,7 @@
 # Ignore all files beginning with a dot except gitignore
 .*
 !.gitignore
+!.gitattributes
 
 # Don't ignore pre-commit
 !.pre-commit-config.yaml
