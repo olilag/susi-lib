@@ -40,3 +40,33 @@ exclude = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/susi_lib"]
+
+[tool.hatch.envs.dev]
+dependencies = [
+  "pre-commit",
+]
+post-install-commands = [
+  "pre-commit install",
+]
+
+[tool.hatch.envs.style]
+detached = true
+dependencies = [
+  "flake8",
+  "black",
+  "isort",
+  "pylint",
+]
+
+[tool.hatch.envs.style.scripts]
+check = [
+  "flake8 .",
+  "black --check --diff .",
+  "isort --check-only --diff .",
+  "pylint ."
+]
+format = [
+  "isort .",
+  "black .",
+  "check",
+]
