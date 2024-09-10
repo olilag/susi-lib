@@ -2,7 +2,7 @@
 import os
 import sys
 import unittest
-from unittest.mock import patch
+from unittest.mock import mock_open, patch
 
 from susi_lib.regex import create_regex
 from susi_lib.word_finder_cli import _translate, _validate_input, main
@@ -19,7 +19,9 @@ class TestWordFinder(unittest.TestCase):
         ]
 
         for length, letters, result in tests:
-            args, kwargs = _translate(letters, length, [])
+            with patch("builtins.open", mock_open()) as mock_file:
+                f = open(mock_file)
+            args, kwargs = _translate(letters, length, f)
             regex = create_regex(*args, **kwargs)
             self.assertEqual(regex.get_pattern(), result)
 

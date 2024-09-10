@@ -9,7 +9,7 @@ from enum import Enum, auto
 class RegEx:
     """Class to store and execute a regular expression on some provided data."""
 
-    def __init__(self, pattern: str, data: Union[Iterable[str], str, None] = None):
+    def __init__(self, pattern: str, data: list[str] | str | None = None):
         """Create RegEx instance.
 
         :param pattern: Valid regular expression pattern
@@ -23,7 +23,7 @@ class RegEx:
         if data is not None:
             self.set_data(data)
 
-    def set_data(self, data: Union[Iterable[str], str]):
+    def set_data(self, data: list[str] | str):
         """Sets data on which the regular expression will execute.
 
         :param data: String containing a filename or a list[str] containing wanted data
@@ -71,9 +71,9 @@ class Selection(Enum):
 
 
 def create_regex(
-    *args: Tuple[str, Selection],
-    data: Union[Iterable[str], str, None] = None,
-    length: Union[int, Tuple[int, int]] = None,
+    *args: tuple[str, Selection],
+    data: list[str] | str | None = None,
+    length: int | tuple[int, int] = None,
     letters: str = None,
     invert: bool = False,
 ) -> RegEx:
@@ -120,7 +120,7 @@ def create_regex(
         return RegEx(pattern, data)
     if length is None or letters is None:
         raise ValueError("You must set all arguments")
-    if not isinstance(length, Union[int, tuple]):
+    if not isinstance(length, (int, tuple)):
         raise TypeError("Length must an int or pair (int, int)")
     if not isinstance(letters, str):
         raise TypeError("Letters must be a string")

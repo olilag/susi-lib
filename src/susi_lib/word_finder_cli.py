@@ -1,6 +1,6 @@
 import argparse
 import sys
-from typing import TextIO, Tuple, Union
+from typing import TextIO
 
 from susi_lib.regex import Selection, create_regex
 
@@ -26,10 +26,9 @@ def _validate_input(wanted_letters: list[str], length: str | None):
     return True, ""
 
 
-def _translate(
-    wanted_letters: list[str], length: Union[int, Tuple[int, int]], file: TextIO
-):
+def _translate(wanted_letters: list[str], length: int | tuple[int, int], file: TextIO):
     data = list(file)
+    file.close()
 
     match len(wanted_letters):
         case 1:
@@ -63,17 +62,20 @@ def main():
               letters for that position",
         nargs="*",
     )
-    args = arg_parser.parse_args()
+    args_parsed = arg_parser.parse_args()
 
-    valid, message = _validate_input(args.wanted_letters, args.word_length)
+    valid, message = _validate_input(
+        args_parsed.wanted_letters, args_parsed.word_length
+    )
     if not valid:
         print(f"Error: {message}")
+        args_parsed.input_file.close()
         sys.exit(1)
 
     word_length = (
-        tuple(map(int, args.word_length.split("-")))
-        if args.word_length is not None
-        else len(args.wanted_letters[0])
+        tuple(map(int, args_parsed.word_length.split("-")))
+        if args_parsed.word_length is not None
+        else len(args_parsed.wanted_letters[0])
     )
     word_length = (
         word_length[0]
@@ -81,6 +83,8 @@ def main():
         else word_length
     )
 
-    args, kwargs = _translate(args.wanted_letters, word_length, args.input_file)
+    args, kwargs = _translate(
+        args_parsed.wanted_letters, word_length, args_parsed.input_file
+    )
     regex = create_regex(*args, **kwargs)
     print("\n".join(regex.execute()))
