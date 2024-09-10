@@ -10,12 +10,14 @@ on:
       - "src/**"
       - "tests/**"
       - "pyproject.toml"
+      - ".github/workflows/test.yml"
   pull_request:
     branches: [ "master" ]
-    paths-ignore:
-      - "src/**"
-      - "tests/**"
-      - "pyproject.toml"
+    paths:
+    - "src/**"
+    - "tests/**"
+    - "pyproject.toml"
+    - ".github/workflows/test.yml"
 
 jobs:
   build:
