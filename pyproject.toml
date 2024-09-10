@@ -75,3 +75,10 @@ format = [
   "black .",
   "check",
 ]
+
+[tool.hatch.envs.hatch-test]
+default-args = ["tests"]
+extra-args = ["-W error"]
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.12", "3.11", "3.10"]
