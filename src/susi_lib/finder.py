@@ -1,6 +1,7 @@
 """Contains the Finder class for searching in text."""
 
-from typing import Callable, List, Literal, Union, overload
+from collections.abc import Callable
+from typing import Literal, overload
 
 
 class Finder:
@@ -9,7 +10,7 @@ class Finder:
     Supports lazy iteration over all matches.
     """
 
-    def __init__(self, inp: Union[str, List[str]], *functions: Callable[[str], bool]):
+    def __init__(self, inp: str | list[str], *functions: Callable[[str], bool]):
         """Creates new Finder instance.
 
         :param inp: Input data. Either a filename or a list[str] containing lines
@@ -38,10 +39,10 @@ class Finder:
         return True
 
     @overload
-    def __execute(self, first: Literal[True]) -> Union[str, None]: ...
+    def __execute(self, first: Literal[True]) -> str | None: ...
 
     @overload
-    def __execute(self, first: Literal[False]) -> List[str]: ...
+    def __execute(self, first: Literal[False]) -> list[str]: ...
 
     def __execute(self, first: bool):
         result = []

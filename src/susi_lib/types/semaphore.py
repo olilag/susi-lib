@@ -1,7 +1,5 @@
 """Provides Semaphore class for representing strings in semaphore encoding."""
 
-from typing import List, Tuple, Union
-
 
 class SemaphoreChar:
     """Represents a character in semaphore encoding."""
@@ -76,7 +74,7 @@ class SemaphoreChar:
     def __ne__(self, other):
         return not self == other
 
-    def get_directions(self) -> Tuple[int, int]:
+    def get_directions(self) -> tuple[int, int]:
         """1-down, 2-down left, 3-left, 4-up left, 5-up, 6-up right, 7-right, 8-down right
 
         :return: Pair (1-8, 1-8) representing semaphore directions of the character
@@ -101,7 +99,7 @@ class Semaphore:
     objects, strings or SemaphoreChars. Can get its length by len function.
     """
 
-    def __init__(self, characters: Union[str, List[SemaphoreChar]]):
+    def __init__(self, characters: str | list[SemaphoreChar]):
         """Creates Semaphore object from characters.
 
         :param characters: String of alphabet and spaces

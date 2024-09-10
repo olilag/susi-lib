@@ -1,7 +1,5 @@
 """Provides Braille class for work with braille."""
 
-from typing import List, Tuple, Union
-
 
 class BrailleChar:
     """Represent a single char in braille."""
@@ -61,7 +59,7 @@ class BrailleChar:
     def __ne__(self, other):
         return not self == other
 
-    def get_points(self) -> Tuple[bool, bool, bool, bool, bool, bool]:
+    def get_points(self) -> tuple[bool, bool, bool, bool, bool, bool]:
         """Return a 6-tuple with bool values specifying which circles are black.
 
         :return: 6-tuple representing black circles
@@ -95,7 +93,7 @@ class Braille:
     strings or BrailleChars. Can get its length by len function.
     """
 
-    def __init__(self, characters: Union[str, List[BrailleChar]]):
+    def __init__(self, characters: str | list[BrailleChar]):
         """Creates Braille object from characters.
 
         :param characters: String of alphabet and spaces

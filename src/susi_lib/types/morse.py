@@ -1,66 +1,5 @@
 """Provides Morse class for representing a string in morse encoding."""
 
-from typing import List, Union
-
-
-class Morse:
-    """Represents a string in morse.
-
-    Can be subscripted, iterated through, compared for equality, added with other Morse objects,
-    strings.. Can get its length by len function.
-    """
-
-    def __init__(self, data: Union[str, "MorseSymbol", "MorseSequence"]):
-        if isinstance(data, str):
-            self.__data = MorseSymbol(data) if len(data) < 2 else MorseSequence(data)
-            self.dots = self.__data.dots
-            self.dashes = self.__data.dashes
-        elif not isinstance(data, MorseSymbol) and not isinstance(data, MorseSequence):
-            raise TypeError("Data must be a string")
-        else:
-            self.__data = data
-            self.dots = self.__data.dots
-            self.dashes = self.__data.dashes
-
-    def __eq__(self, other):
-        if not isinstance(other, Morse):
-            raise TypeError("Can't compare these two types")
-        return self.__data == other.__data
-
-    def __ne__(self, other):
-        return not self == other
-
-    def __str__(self):
-        return str(self.__data)
-
-    def __add__(self, other):
-        if isinstance(other, str):
-            other = Morse(other)
-        if not isinstance(other, Morse):
-            raise TypeError("Can't add these two types")
-        return Morse(self.__data + other.__data)
-
-    def __len__(self):
-        return len(self.__data)
-
-    def __getitem__(self, item):
-        return self.__data[item]
-
-    def get(self):
-        """
-
-        :return: Underlying sequence of MorseSymbols
-        """
-        return self.__data.get()
-
-    @staticmethod
-    def get_dict():
-        """Returns dictionary for translating from chars to morse.
-
-        :return: Translation dictionary
-        """
-        return MorseSymbol.get_dict()
-
 
 class MorseSymbol:
     """Represents a single morse character."""
@@ -170,7 +109,7 @@ class MorseSequence:
                 correct = correct and (c.isalpha() or c == " " or c == "")
             if not correct:
                 raise ValueError("All chars need to be alphabetical or a space")
-        self.__seq: List[MorseSymbol] = []
+        self.__seq: list[MorseSymbol] = []
         if len(text) != 0:
             first = True
             for c in text.lower():
@@ -201,7 +140,7 @@ class MorseSequence:
     def __str__(self):
         return "".join([str(x) for x in self.__seq])
 
-    def __add__(self, other: Union["MorseSequence", MorseSymbol]):
+    def __add__(self, other: "MorseSequence | MorseSymbol"):
         if isinstance(other, MorseSequence):
             if self.__seq[-1] not in (MorseSymbol(" "), MorseSymbol("")):
                 self.__seq += MorseSymbol("") + other.__seq
@@ -245,3 +184,62 @@ class MorseSequence:
         :return: Underlying sequence of MorseSymbols
         """
         return self.__seq
+
+
+class Morse:
+    """Represents a string in morse.
+
+    Can be subscripted, iterated through, compared for equality, added with other Morse objects,
+    strings.. Can get its length by len function.
+    """
+
+    def __init__(self, data: str | MorseSymbol | MorseSequence):
+        if isinstance(data, str):
+            self.__data = MorseSymbol(data) if len(data) < 2 else MorseSequence(data)
+            self.dots = self.__data.dots
+            self.dashes = self.__data.dashes
+        elif not isinstance(data, MorseSymbol) and not isinstance(data, MorseSequence):
+            raise TypeError("Data must be a string")
+        else:
+            self.__data = data
+            self.dots = self.__data.dots
+            self.dashes = self.__data.dashes
+
+    def __eq__(self, other):
+        if not isinstance(other, Morse):
+            raise TypeError("Can't compare these two types")
+        return self.__data == other.__data
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __str__(self):
+        return str(self.__data)
+
+    def __add__(self, other):
+        if isinstance(other, str):
+            other = Morse(other)
+        if not isinstance(other, Morse):
+            raise TypeError("Can't add these two types")
+        return Morse(self.__data + other.__data)
+
+    def __len__(self):
+        return len(self.__data)
+
+    def __getitem__(self, item):
+        return self.__data[item]
+
+    def get(self):
+        """
+
+        :return: Underlying sequence of MorseSymbols
+        """
+        return self.__data.get()
+
+    @staticmethod
+    def get_dict():
+        """Returns dictionary for translating from chars to morse.
+
+        :return: Translation dictionary
+        """
+        return MorseSymbol.get_dict()

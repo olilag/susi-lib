@@ -1,7 +1,5 @@
 """Provides NumberSystems class for representing strings as numbers."""
 
-from typing import List, Union
-
 
 class NumberChar:
     """Represents a character as number."""
@@ -55,7 +53,7 @@ class NumberSystems:
     objects, strings or NumberChars. Can get its length by len function.
     """
 
-    def __init__(self, characters: Union[str, List[NumberChar]], base=10):
+    def __init__(self, characters: str | list[NumberChar], base=10):
         if not isinstance(base, int):
             raise TypeError("Base must an int")
         if base not in [2, 10, 16]:

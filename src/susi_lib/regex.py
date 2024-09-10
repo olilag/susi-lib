@@ -4,7 +4,6 @@ a RegEx instance based without the full knowledge of regular expression syntax.
 
 import re
 from enum import Enum, auto
-from typing import Iterable, Tuple, Union
 
 
 class RegEx:
