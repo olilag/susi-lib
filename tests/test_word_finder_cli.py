@@ -53,7 +53,7 @@ class TestWordFinder(unittest.TestCase):
 
         for args in correct:
             with patch.object(sys, "argv", args):
-                main()
+                self.assertEqual(main(), 0)
 
         bad_usage = [
             f"susi-word-finder abc . . ^a-f -w 5 -i {file_location}".split(),
@@ -64,9 +64,7 @@ class TestWordFinder(unittest.TestCase):
 
         for args in bad_usage:
             with patch.object(sys, "argv", args):
-                with self.assertRaises(SystemExit):
-                    main()
-                    unittest.main(exit=False)
+                self.assertEqual(main(), 1)
 
 
 if __name__ == "__main__":

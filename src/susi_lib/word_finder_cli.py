@@ -54,7 +54,11 @@ def main():
         "-w", "--word-length", type=str, help="search for words of this length"
     )
     arg_parser.add_argument(
-        "-i", "--input-file", type=argparse.FileType(), default=sys.stdin
+        "-i",
+        "--input-file",
+        type=argparse.FileType(),
+        default=sys.stdin,
+        help="Path to a input file, each word should be on separate line. Default: stdin",
     )
     arg_parser.add_argument(
         "wanted_letters",
@@ -70,7 +74,7 @@ def main():
     if not valid:
         print(f"Error: {message}")
         args_parsed.input_file.close()
-        sys.exit(1)
+        return 1
 
     word_length = (
         tuple(map(int, args_parsed.word_length.split("-")))
@@ -88,3 +92,4 @@ def main():
     )
     regex = create_regex(*args, **kwargs)
     print("\n".join(regex.execute()))
+    return 0
