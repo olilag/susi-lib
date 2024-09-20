@@ -20,7 +20,7 @@ on:
     - ".github/workflows/test.yml"
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
