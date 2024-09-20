@@ -1,6 +1,6 @@
 import argparse
 import sys
-from typing import TextIO
+from typing import Literal, NotRequired, TextIO, TypedDict, cast
 
 from susi_lib.regex import Selection, create_regex
 
@@ -26,7 +26,19 @@ def _validate_input(wanted_letters: list[str], length: str | None):
     return True, ""
 
 
-def _translate(wanted_letters: list[str], length: int | tuple[int, int], file: TextIO):
+class _TrDictReturn(TypedDict):
+    data: NotRequired[list[str]]
+    length: NotRequired[int | tuple[int, int]]
+    letters: NotRequired[str]
+    invert: NotRequired[bool]
+
+
+def _translate(
+    wanted_letters: list[str], length: int | tuple[int, int], file: TextIO
+) -> tuple[
+    list[tuple[str, Selection]],
+    _TrDictReturn,
+]:
     data = list(file)
     file.close()
 
@@ -35,7 +47,7 @@ def _translate(wanted_letters: list[str], length: int | tuple[int, int], file: T
             wl = wanted_letters[0]
             return ([], {"data": data, "length": length, "letters": wl})
         case _:
-            args = []
+            args: list[tuple[str, Selection]] = []
             for group in wanted_letters:
                 if "." in group:
                     args.append((group, Selection.ANY))
@@ -46,7 +58,7 @@ def _translate(wanted_letters: list[str], length: int | tuple[int, int], file: T
             return (args, {"data": data})
 
 
-def main():
+def main() -> Literal[0, 1]:
     arg_parser = argparse.ArgumentParser(
         description="Program for finding words using regular expressions."
     )
@@ -76,10 +88,13 @@ def main():
         args_parsed.input_file.close()
         return 1
 
-    word_length = (
-        tuple(map(int, args_parsed.word_length.split("-")))
-        if args_parsed.word_length is not None
-        else len(args_parsed.wanted_letters[0])
+    word_length = cast(
+        int | tuple[int, int] | tuple[int],
+        (
+            tuple(map(int, args_parsed.word_length.split("-")))
+            if args_parsed.word_length is not None
+            else len(args_parsed.wanted_letters[0])
+        ),
     )
     word_length = (
         word_length[0]
