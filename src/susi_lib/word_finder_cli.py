@@ -1,6 +1,6 @@
 import argparse
 import sys
-from typing import Literal, NotRequired, TextIO, TypedDict, cast
+from typing import Literal, TextIO, TypedDict, cast
 
 from susi_lib.regex import Selection, create_regex
 
@@ -26,11 +26,11 @@ def _validate_input(wanted_letters: list[str], length: str | None):
     return True, ""
 
 
-class _TrDictReturn(TypedDict):
-    data: NotRequired[list[str]]
-    length: NotRequired[int | tuple[int, int]]
-    letters: NotRequired[str]
-    invert: NotRequired[bool]
+class _TrDictReturn(TypedDict, total=False):
+    data: list[str]
+    length: int | tuple[int, int]
+    letters: str
+    invert: bool
 
 
 def _translate(
