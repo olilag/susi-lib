@@ -52,6 +52,7 @@ exclude = [
 packages = ["src/susi_lib"]
 
 [tool.hatch.envs.dev]
+installer = "uv"
 dependencies = [
   "pre-commit",
 ]
@@ -60,6 +61,7 @@ post-install-commands = [
 ]
 
 [tool.hatch.envs.style]
+installer = "uv"
 detached = true
 dependencies = [
   "flake8",
@@ -82,8 +84,12 @@ format = [
 ]
 
 [tool.hatch.envs.hatch-test]
+installer = "uv"
 default-args = ["tests"]
 extra-args = ["-W error"]
+
+[tool.hatch.envs.hatch-test.extra-scripts]
+pip = "{env:HATCH_UV} pip {args}"
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.12", "3.11", "3.10"]
