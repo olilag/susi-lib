@@ -1,4 +1,4 @@
-"""TODO: this docstring"""
+"""Provides class Dictionary for convenient access to SuŠi dictionaries."""
 
 from pathlib import Path
 from typing import Literal, TypedDict
@@ -24,13 +24,20 @@ class Dictionary:
 
     Usage::
 
-        location = Dictionary["PM-a"]   # returns the path to file with podstatne mena in ascii format
+        location = Dictionary["PM_a"]   # returns the path to file with podstatne mena in ascii format
         f = open(location, "r", format="utf-8")     # opens the file
 
     Valid strings to type into Dictionary[] are:
+
+    - "PM" => "podstatne_mena.txt",
+    - "PM_a" => "podstatne_mena_ascii.txt",
+    - "S" => "slovnik.txt",
+    - "S_a" => "slovnik-ascii.txt",
+    - "ZT" => "zakladne_tvary.txt",
+    - "ZT_a" => "zakladne_tvary_ascii.txt",
     """
 
-    host_url = (
+    __host_url = (
         "https://raw.githubusercontent.com/olilag/susi-lib/refs/heads/master/assets/"
     )
     download_dir = user_cache_path("susi-lib", False)
@@ -45,7 +52,7 @@ class Dictionary:
 
     @classmethod
     def __download_file(cls, name: str) -> None:
-        urlretrieve(cls.host_url + name, cls.download_dir / name)
+        urlretrieve(cls.__host_url + name, cls.download_dir / name)
 
     def __class_getitem__(cls, item: Literal["PM", "PM_a", "S", "S_a"]) -> Path:
         p = cls.download_dir / cls.__file_mapping[item]

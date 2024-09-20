@@ -27,7 +27,7 @@ Niektoré linuxy (napr. Arch) vedia mať problém s globálnym inštalovaním py
 ### Windows
 
 ```bash
-pip install susi-lib
+py -m pip install susi-lib
 ```
 
 TODO: otestovať inštaláciu na windowse a popísať riešenie problémov
@@ -46,7 +46,8 @@ susi_lib
 │      táto funkcia urči, či dané slovo chceme alebo nie
 ├─ RegEx (vec) - trieda na hľadanie pomocou regulárnych výrazov
 ├─ create_regex (vec) - funkcia, ktorá vytvorí regulárny výraz z postupnosti zadaných písmen
-└─ Selection (vec) - pomocný enum pre funkciu create_regex
+├─ Selection (vec) - pomocný enum pre funkciu create_regex
+└─ Dictionary (vec) - trieda, ktorá automaticky stiahne požadovaný slovník a vráti cestu k nemu
 ```
 
 Podrobnejšia dokumentácia jednotlivých vecí vznikne v blízkej budúcnosti, zatiaľ existujú iba komentáre pre jednotlivé veci, ktoré vie každý rozumnejší code editor zobraziť v náhľade.
