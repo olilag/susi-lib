@@ -28,3 +28,7 @@ from susi_lib.types import Braille, Morse, NumberSystems, Symbols, Semaphore
 # functions
 from susi_lib.functions import decode, encode, Encoding, is_palindrome
 ```
+
+## Pre suši vedúcich
+
+[Tu](./README-sk.md) je bližší návod pre vedúcich, ktorú chcú túto knižnicu používať.

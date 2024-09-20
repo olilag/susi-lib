@@ -190,7 +190,7 @@ class Morse:
     """Represents a string in morse.
 
     Can be subscripted, iterated through, compared for equality, added with other Morse objects,
-    strings.. Can get its length by len function.
+    strings... Can get its length by len function.
     """
 
     def __init__(self, data: str | MorseSymbol | MorseSequence):

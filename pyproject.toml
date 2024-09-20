@@ -21,6 +21,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dynamic = ["version"]
+dependencies = [
+  "platformdirs",
+]
 
 [project.urls]
 Homepage = "https://github.com/olilag/susi-lib"
@@ -40,7 +43,9 @@ exclude = [
   "/docs",
   "/tests",
   ".pre-commit-config.yaml",
-  ".gitattributes"
+  ".gitattributes",
+  "/examples",
+  "/assets",
 ]
 
 [tool.hatch.build.targets.wheel]
