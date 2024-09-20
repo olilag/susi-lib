@@ -10,7 +10,7 @@ class Finder:
     Supports lazy iteration over all matches.
     """
 
-    def __init__(self, inp: str | list[str], *functions: Callable[[str], bool]):
+    def __init__(self, inp: str | list[str], *functions: Callable[[str], bool]) -> None:
         """Creates new Finder instance.
 
         :param inp: Input data. Either a filename or a list[str] containing lines
@@ -18,7 +18,7 @@ class Finder:
         """
         if isinstance(inp, str):
             with open(inp, "r", encoding="utf-8") as f:
-                self.__text = []
+                self.__text: list[str] = []
                 for line in f:
                     self.__text.append(line.strip())
         elif isinstance(inp, list):
@@ -28,7 +28,7 @@ class Finder:
                 "Inp must be a string with filename or list[str] with some data"
             )
         for f in functions:
-            if not isinstance(f, Callable):
+            if not callable(f):
                 raise TypeError("All functions must be callable")
         self.__function = list(functions)
 
@@ -78,7 +78,7 @@ class Finder:
         :param functions: New list of functions
         """
         for f in functions:
-            if not isinstance(f, Callable):
+            if not callable(f):
                 raise TypeError("All functions must be callable")
         self.__function = list(functions)
 
@@ -88,6 +88,6 @@ class Finder:
         :param functions: New functions to add
         """
         for f in functions:
-            if not isinstance(f, Callable):
+            if not callable(f):
                 raise TypeError("All functions must be callable")
         self.__function.extend(functions)
