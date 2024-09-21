@@ -1,13 +1,19 @@
 import argparse
 import sys
-from typing import Literal, TextIO, TypedDict, cast
+from inspect import get_annotations
+from pathlib import Path
+from typing import Literal, TypedDict, cast
 
+from susi_lib.dictionary import Dictionary, _Mapping
 from susi_lib.regex import Selection, create_regex
 
 
-def _validate_input(wanted_letters: list[str], length: str | None):
+def _validate_input(wanted_letters: list[str], length: str | None, file: str | None):
     if len(wanted_letters) < 1:
         return False, "No wanted letters"
+    keys = get_annotations(_Mapping)
+    if file is not None and file not in keys and not Path(file).exists():
+        return False, f"File '{file}' does not exist"
     if length is None:
         length = str(len(wanted_letters))
     match (length.split("-")):
@@ -34,13 +40,23 @@ class _TrDictReturn(TypedDict, total=False):
 
 
 def _translate(
-    wanted_letters: list[str], length: int | tuple[int, int], file: TextIO
+    wanted_letters: list[str], length: int | tuple[int, int], file: str | None
 ) -> tuple[
     list[tuple[str, Selection]],
     _TrDictReturn,
 ]:
-    data = list(file)
-    file.close()
+    if file is None:
+        f = sys.stdin
+    elif file in _Mapping(PM="", PM_a="", S="", S_a="", ZT="", ZT_a="").keys():
+        f = open(
+            Dictionary[cast(Literal["PM", "PM_a", "S", "S_a", "ZT", "ZT_a"], file)],
+            "r",
+            encoding="utf-8",
+        )
+    else:
+        f = open(file, "r", encoding="utf-8")
+    data = list(f)
+    f.close()
 
     match len(wanted_letters):
         case 1:
@@ -68,9 +84,10 @@ def main() -> Literal[0, 1]:
     arg_parser.add_argument(
         "-i",
         "--input-file",
-        type=argparse.FileType(),
-        default=sys.stdin,
-        help="Path to a input file, each word should be on separate line. Default: stdin",
+        type=str,
+        default=None,
+        help="Path to a input file, each word should be on separate line. Or a dictionary short: \
+            'PM', 'PM_a', 'S', 'S_a', 'ZT', 'ZT_a'. Default: stdin",
     )
     arg_parser.add_argument(
         "wanted_letters",
@@ -81,11 +98,10 @@ def main() -> Literal[0, 1]:
     args_parsed = arg_parser.parse_args()
 
     valid, message = _validate_input(
-        args_parsed.wanted_letters, args_parsed.word_length
+        args_parsed.wanted_letters, args_parsed.word_length, args_parsed.input_file
     )
     if not valid:
         print(f"Error: {message}")
-        args_parsed.input_file.close()
         return 1
 
     word_length = cast(

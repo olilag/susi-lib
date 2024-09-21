@@ -20,10 +20,9 @@ class TestWordFinder(unittest.TestCase):
 
         for length, letters, result in tests:
             with patch("builtins.open", mock_open()) as mock_file:
-                f = open(mock_file)
-            args, kwargs = _translate(letters, length, f)
-            regex = create_regex(*args, **kwargs)
-            self.assertEqual(regex.get_pattern(), result)
+                args, kwargs = _translate(letters, length, mock_file)
+                regex = create_regex(*args, **kwargs)
+                self.assertEqual(regex.get_pattern(), result)
 
     def test_input_validation(self):
         tests = [
@@ -39,7 +38,7 @@ class TestWordFinder(unittest.TestCase):
         ]
 
         for length, letters, result in tests:
-            valid, _ = _validate_input(letters, length)
+            valid, _ = _validate_input(letters, length, None)
             self.assertEqual(valid, result, f"len: {length}, let: {letters}")
 
     def test_full_cli(self):
