@@ -11,4 +11,8 @@ Obsah:
    applications/index
    api/index
    feedback
-   changelog
+
+Najnovšie zmeny
+---------------
+
+.. git_changelog::
