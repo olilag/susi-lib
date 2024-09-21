@@ -48,7 +48,7 @@ class Dictionary(metaclass=_DictMeta):
     host_url = (
         "https://raw.githubusercontent.com/olilag/susi-lib/refs/heads/master/assets/"
     )
-    download_dir = user_cache_path("susi-lib", False)
+    download_dir = user_cache_path("susi-lib", False, ensure_exists=True)
     file_mapping: _Mapping = {
         "PM": "podstatne_mena.txt",
         "PM_a": "podstatne_mena_ascii.txt",
