@@ -55,7 +55,7 @@ def _translate(
         )
     else:
         f = open(file, "r", encoding="utf-8")
-    data = list(f)
+    data = [l.strip() for l in f]
     f.close()
 
     match len(wanted_letters):
