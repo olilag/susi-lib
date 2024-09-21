@@ -2,7 +2,10 @@
 
 
 class SemaphoreChar:
-    """Represents a character in semaphore encoding."""
+    """Represents a character in semaphore encoding.
+
+    :meta private:
+    """
 
     __left = "\u2190"
     __up = "\u2191"
@@ -77,6 +80,7 @@ class SemaphoreChar:
     def get_directions(self) -> tuple[int, int]:
         """1-down, 2-down left, 3-left, 4-up left, 5-up, 6-up right, 7-right, 8-down right
 
+        :meta public:
         :return: Pair (1-8, 1-8) representing semaphore directions of the character
         """
         if self.__char == " ":
@@ -96,11 +100,11 @@ class Semaphore:
     """Represents a string in semaphore.
 
     Can be subscripted, iterated through, compared for equality, added with other Semaphore
-    objects, strings or SemaphoreChars. Can get its length by len function.
+    objects, strings or SemaphoreChars. Can get its length by :py:func:`len` function.
     """
 
-    def __init__(self, characters: str | list[SemaphoreChar]):
-        """Creates Semaphore object from characters.
+    def __init__(self, characters: str | list[SemaphoreChar]) -> None:
+        """Creates :py:class:`Semaphore` object from characters.
 
         :param characters: String of alphabet and spaces
         """
@@ -143,7 +147,7 @@ class Semaphore:
         return not self == other
 
     @staticmethod
-    def get_dict():
+    def get_dict() -> dict[str, tuple[int, int]]:
         """Returns dictionary for translating from chars to direction pairs.
 
         :return: Translation dictionary

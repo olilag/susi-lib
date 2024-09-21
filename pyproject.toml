@@ -60,6 +60,9 @@ post-install-commands = [
   "pre-commit install",
 ]
 
+[tool.hatch.envs.dev.extra-scripts]
+pip = "{env:HATCH_UV} pip {args}"
+
 [tool.hatch.envs.style]
 installer = "uv"
 detached = true
@@ -99,12 +102,13 @@ dependencies = [
   "sphinx",
   "sphinx-last-updated-by-git",
   "sphinx-rtd-theme",
-  "sphinx-autobuild"
+  "sphinx-autobuild",
+  "sphinx-git",
 ]
 
 [tool.hatch.envs.docs.scripts]
 build = ["sphinx-build docs docs/_build/html"]
-watch = ["sphinx-autobuild docs docs/_build/html"]
+watch = ["sphinx-autobuild docs docs/_build/html --watch src"]
 
 [tool.hatch.envs.docs.extra-scripts]
 pip = "{env:HATCH_UV} pip {args}"

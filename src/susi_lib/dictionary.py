@@ -30,19 +30,19 @@ class Dictionary(metaclass=_DictMeta):
     If the wanted dictionary is not downloaded, it automatically downloads it and saves it
     for later use.
 
-    Usage::
+    **Usage**::
 
         location = Dictionary["PM_a"]   # returns the path to file with podstatne mena in ascii format
         f = open(location, "r", format="utf-8")     # opens the file
 
     Valid strings to type into Dictionary[] are:
 
-    - "PM" => "podstatne_mena.txt",
-    - "PM_a" => "podstatne_mena_ascii.txt",
-    - "S" => "slovnik.txt",
-    - "S_a" => "slovnik-ascii.txt",
-    - "ZT" => "zakladne_tvary.txt",
-    - "ZT_a" => "zakladne_tvary_ascii.txt",
+    - ``"PM"`` => "podstatne_mena.txt",
+    - ``"PM_a"`` => "podstatne_mena_ascii.txt",
+    - ``"S"`` => "slovnik.txt",
+    - ``"S_a"`` => "slovnik-ascii.txt",
+    - ``"ZT"`` => "zakladne_tvary.txt",
+    - ``"ZT_a"`` => "zakladne_tvary_ascii.txt",
     """
 
     host_url = (

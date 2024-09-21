@@ -1,10 +1,14 @@
-susi-lib dokumentácia
-=====================
+susi-lib
+========
+
+Obsah:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-.. toctree::
+   installation
    usage
-   reference
+   applications/index
+   api/index
+   feedback
+   changelog

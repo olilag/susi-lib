@@ -15,30 +15,32 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(
             create_regex(
                 ("abc", Selection.NONE), ("def", Selection.INVERT), ("", Selection.ANY)
-            ).get_pattern(),
+            ).pattern,
             "^[abc][^def].$",
         )
         self.assertEqual(
-            create_regex(length=5, letters="auto", invert=False).get_pattern(),
+            create_regex(length=5, letters="auto", invert=False).pattern,
             "^[auto]{5}$",
         )
         self.assertEqual(
-            create_regex(length=(5, 10), letters="auto", invert=False).get_pattern(),
+            create_regex(length=(5, 10), letters="auto", invert=False).pattern,
             "^[auto]{5,10}$",
         )
         self.assertEqual(
-            create_regex(length=5, letters="auto", invert=True).get_pattern(),
+            create_regex(length=5, letters="auto", invert=True).pattern,
             "^[^auto]{5}$",
         )
         with self.assertRaises(TypeError):
-            create_regex(("abc", Selection.NONE), ("def"), ("", Selection.ANY))
+            create_regex(
+                ("abc", Selection.NONE), ("def", Selection.NONE), ("", Selection.ANY)
+            )
         with self.assertRaises(ValueError):
             create_regex(
                 ("abc", Selection.NONE), ("def", Selection.INVERT), ("", Selection.NONE)
             )
 
     def test_regex(self):
-        self.assertEqual(RegEx("^[asv]{4,7}$").get_pattern(), "^[asv]{4,7}$")
+        self.assertEqual(RegEx("^[asv]{4,7}$").pattern, "^[asv]{4,7}$")
         with self.assertRaises(ValueError):
             _ = RegEx("^[]{4,8}$")
 

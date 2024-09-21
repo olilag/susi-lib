@@ -1,8 +1,13 @@
 """Provides Morse class for representing a string in morse encoding."""
 
+from typing import Self
+
 
 class MorseSymbol:
-    """Represents a single morse character."""
+    """Represents a single morse character.
+
+    :meta private:
+    """
 
     __dot = "."
     __dash = "-"
@@ -76,7 +81,7 @@ class MorseSymbol:
             return 0
         return len(self.__symbol_dict[self.__character])
 
-    def get(self):
+    def get(self) -> list[Self]:
         """
 
         :return: Underlying sequence of MorseSymbols
@@ -98,11 +103,16 @@ class MorseSymbol:
 
 
 class MorseSequence:
-    """Represents a sequence of morse characters."""
+    """Represents a sequence of morse characters.
 
-    def __init__(self, text="", init=None):
+    :meta private:
+    """
+
+    def __init__(self, text: str = "", init: list[MorseSymbol] | None = None) -> None:
         if init is None:
-            init = []
+            b_init: list[MorseSymbol] = []
+        else:
+            b_init = init
         if isinstance(text, str):
             correct = True
             for c in text.lower():
@@ -133,7 +143,7 @@ class MorseSequence:
             self.dots = sum((x.dots for x in self.__seq))
             self.dashes = sum((x.dashes for x in self.__seq))
             return
-        self.__seq = init
+        self.__seq = b_init
         self.dots = sum((x.dots for x in self.__seq))
         self.dashes = sum((x.dashes for x in self.__seq))
 
@@ -190,7 +200,7 @@ class Morse:
     """Represents a string in morse.
 
     Can be subscripted, iterated through, compared for equality, added with other Morse objects,
-    strings... Can get its length by len function.
+    strings. Can get its length by len function.
     """
 
     def __init__(self, data: str | MorseSymbol | MorseSequence):
@@ -229,7 +239,7 @@ class Morse:
     def __getitem__(self, item):
         return self.__data[item]
 
-    def get(self):
+    def get(self) -> list[MorseSymbol]:
         """
 
         :return: Underlying sequence of MorseSymbols
@@ -237,7 +247,7 @@ class Morse:
         return self.__data.get()
 
     @staticmethod
-    def get_dict():
+    def get_dict() -> dict[str, str]:
         """Returns dictionary for translating from chars to morse.
 
         :return: Translation dictionary

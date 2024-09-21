@@ -53,7 +53,7 @@ class Symbols:
     __word_separator = "⫽"
     __rev_morse = {value: key for key, value in Morse.get_dict().items()}
 
-    def __init__(self, characters: str):
+    def __init__(self, characters: str) -> None:
         """Creates Symbols from characters.
 
         :param characters: String to store
@@ -156,7 +156,7 @@ class Symbols:
         """
         return Morse(self.__characters)
 
-    def to_number_systems(self, base=10) -> NumberSystems:
+    def to_number_systems(self, base: int = 10) -> NumberSystems:
         """
 
         :param base: Int base of the desired system (2, 10, 16)

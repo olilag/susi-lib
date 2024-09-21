@@ -1,5 +1,6 @@
-"""Provides RegEx class for better work with regular expressions, create_regex function to create
-a RegEx instance based without the full knowledge of regular expression syntax.
+"""Provides :py:class:`RegEx` class for better work with regular expressions,
+:py:func:`create_regex` function to create a :py:class:`RegEx` instance based
+without the full knowledge of regular expression syntax.
 """
 
 import re
@@ -9,10 +10,14 @@ from enum import Enum, auto
 class RegEx:
     """Class to store and execute a regular expression on some provided data."""
 
-    def __init__(self, pattern: str, data: list[str] | str | None = None):
-        """Create RegEx instance.
+    def __init__(self, pattern: str, data: list[str] | str | None = None) -> None:
+        """Create :py:class:`RegEx` instance.
+
+        :raises: :py:class:`TypeError` when invalid parameter types are passed
+        :raises: :py:class:`ValueError` when a parameter has invalid value
 
         :param pattern: Valid regular expression pattern
+        :param data: List of string as input data or path to a file, if None it must be set with :py:meth:`set_data` before :py:meth:`execute`
         """
         if not isinstance(pattern, str):
             raise TypeError("Pattern needs to be a string")
@@ -23,8 +28,10 @@ class RegEx:
         if data is not None:
             self.set_data(data)
 
-    def set_data(self, data: list[str] | str):
+    def set_data(self, data: list[str] | str) -> None:
         """Sets data on which the regular expression will execute.
+
+        :raises: :py:class:`TypeError` when invalid parameter types are passed
 
         :param data: String containing a filename or a list[str] containing wanted data
         """
@@ -40,8 +47,10 @@ class RegEx:
                 "Data must be a string with filename or list[str] with some data"
             )
 
-    def execute(self):
+    def execute(self) -> list[str]:
         """Executes the regular expression on provided data. Need to provide data first.
+
+        :raises: :py:class:`AttributeError` when :py:meth:`set_data` wasn't called with valid data before calling this method
 
         :return: List of all found matches
         """
@@ -51,7 +60,8 @@ class RegEx:
         input_text = "\n".join(self.__data)
         return self.__re.findall(input_text)
 
-    def get_pattern(self):
+    @property
+    def pattern(self) -> str:
         """Returns the regular expression pattern.
 
         :return: RE pattern
@@ -73,24 +83,28 @@ class Selection(Enum):
 def create_regex(
     *args: tuple[str, Selection],
     data: list[str] | str | None = None,
-    length: int | tuple[int, int] = None,
-    letters: str = None,
+    length: int | tuple[int, int] | None = None,
+    letters: str | None = None,
     invert: bool = False,
 ) -> RegEx:
     """Creates a RegEx object from arguments.
 
-    If args is specified, it will loop through it and create a pattern. Each tuple contains a set
-    of character and enum to specify what to do with it. Sets of characters are by default wanted.
-    The length of the wanted words will be the numbers of tuples provided.
+    If ``args`` is specified, it will loop through it and create a pattern. Each tuple contains
+    a set of character and enum to specify what to do with it. Sets of characters are by default
+    wanted. The length of the wanted words will be the numbers of tuples provided.
 
-    If args is not specified, it will use remaining keyword arguments to create a RegEx object.
-    Length determines length of the words, letters a set of wanted letters and invert wether to
-    turn wanted letters into unwanted.
+    If ``args`` is not specified, it will use remaining keyword arguments to create a
+    :py:class:`RegEx` object. Length determines length of the words, letters a set of wanted
+    letters and invert wether to turn wanted letters into unwanted.
+
+    :raises: :py:class:`TypeError` when invalid parameter types are passed
+    :raises: :py:class:`ValueError` when a parameter has invalid value
+
     :param args: Set of wanted characters and enum to specify special action.
     :param length: Int specifying length of the word or a pair (begin, end) specifying a range
     :param letters: Set of wanted letters
-    :param invert: Bool value, set to True to turn wanted letters to unwanted
-    :return: RegEx object with desired pattern
+    :param invert: Bool value, set to ``True`` to turn wanted letters to unwanted
+    :return: :py:class:`RegEx` object with desired pattern
     """
     if len(args) > 0:
         pattern = "^"

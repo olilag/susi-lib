@@ -1,30 +1,6 @@
 Používanie
 ==========
 
-Inštalácia
-----------
-
-Pred prvým použitím si treba knižnicu nainštalovať.
-
-Windows
-^^^^^^^
-.. code-block:: console
-
-   $ py -m pip install susi-lib
-
-Linux
-^^^^^
-.. code-block:: console
-
-   $ python -m pip install susi-lib
-
-Niektoré linuxy (napr. Arch) vedia mať problém s globálnym inštalovaním python balíčkov.
-Treba vtedy skúsiť user inštaláciu.
-Ak ani to nepomôže, tak treba použiť virtual environment (napríklad builtin venv) - verím, že ak máš linux, tak vieš čo to je a nebudem to tu vysvetľovať.
-
-V kóde
-------
-
 Na použitie v kóde treba balíček importovať.
 To sa robí kľúčovým slovom ``import`` a po ňom napísať názov balíčka ``import susi_lib``.
 Ďalej v kóde sa dajú jednotlivé triedy/funkcie použiť ako ``susi_lib.<podbalíček>.<vec>``,
@@ -32,8 +8,7 @@ kde vec je väčšinou nejaká funkcia/trieda a podbalíček je "cesta" k danej 
 Štruktúra balíčka je nižšie.
 Alebo sa dá daná vec importnúť aj nasledovne ``from susi_lib.<podbalíček> import <vec>``, vo zvyšku kódu potom viete danú vec používať aj iba napísaním vec bez "cesty".
 
-Štruktúra importov
-^^^^^^^^^^^^^^^^^^
+**Štruktúra importov**
 
 | susi_lib
 | ├─ functions (podbalíček)

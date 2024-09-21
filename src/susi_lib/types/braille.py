@@ -1,8 +1,13 @@
 """Provides Braille class for work with braille."""
 
+from typing import cast
+
 
 class BrailleChar:
-    """Represent a single char in braille."""
+    """Represent a single char in braille.
+
+    :meta private:
+    """
 
     __symbol_dict = {
         "a": 0x1,
@@ -73,8 +78,9 @@ class BrailleChar:
                 False,
                 False,
             )
-        return tuple(
-            ((self.__symbol_dict[self.__char] >> i) % 2 == 1 for i in range(6))
+        return cast(
+            tuple[bool, bool, bool, bool, bool, bool],
+            tuple(((self.__symbol_dict[self.__char] >> i) % 2 == 1 for i in range(6))),
         )
 
     @classmethod
@@ -93,7 +99,7 @@ class Braille:
     strings or BrailleChars. Can get its length by len function.
     """
 
-    def __init__(self, characters: str | list[BrailleChar]):
+    def __init__(self, characters: str | list[BrailleChar]) -> None:
         """Creates Braille object from characters.
 
         :param characters: String of alphabet and spaces
@@ -137,7 +143,7 @@ class Braille:
         raise TypeError("Can't add these two types together")
 
     @staticmethod
-    def get_dict():
+    def get_dict() -> dict[str, int]:
         """Returns dictionary for translating from chars to unicode braille values.
 
         :return: Translation dictionary

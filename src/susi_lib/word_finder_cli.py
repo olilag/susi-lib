@@ -74,28 +74,30 @@ def _translate(
             return (args, {"data": data})
 
 
+parser = argparse.ArgumentParser(
+    description="Program for finding words using regular expressions."
+)
+parser.add_argument(
+    "-w", "--word-length", type=str, help="search for words of this length"
+)
+parser.add_argument(
+    "-i",
+    "--input-file",
+    type=str,
+    default=None,
+    help="Path to a input file, each word should be on separate line. Or a dictionary short: \
+        'PM', 'PM_a', 'S', 'S_a', 'ZT', 'ZT_a'. Default: stdin",
+)
+parser.add_argument(
+    "wanted_letters",
+    help="type wanted letters without spaces or space separated groups of wanted \
+            letters for that position",
+    nargs="*",
+)
+
+
 def main() -> Literal[0, 1]:
-    arg_parser = argparse.ArgumentParser(
-        description="Program for finding words using regular expressions."
-    )
-    arg_parser.add_argument(
-        "-w", "--word-length", type=str, help="search for words of this length"
-    )
-    arg_parser.add_argument(
-        "-i",
-        "--input-file",
-        type=str,
-        default=None,
-        help="Path to a input file, each word should be on separate line. Or a dictionary short: \
-            'PM', 'PM_a', 'S', 'S_a', 'ZT', 'ZT_a'. Default: stdin",
-    )
-    arg_parser.add_argument(
-        "wanted_letters",
-        help="type wanted letters without spaces or space separated groups of wanted \
-              letters for that position",
-        nargs="*",
-    )
-    args_parsed = arg_parser.parse_args()
+    args_parsed = parser.parse_args()
 
     valid, message = _validate_input(
         args_parsed.wanted_letters, args_parsed.word_length, args_parsed.input_file
