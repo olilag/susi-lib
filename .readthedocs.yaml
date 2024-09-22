@@ -9,5 +9,5 @@ build:
     - asdf install uv latest
     - asdf global uv latest
     - uv tool install hatch
-    - uv run hatch shell docs
+    - uv tool run hatch shell docs
     - sphinx-build -T -b html -d docs/_build/doctrees docs $READTHEDOCS_OUTPUT/html
