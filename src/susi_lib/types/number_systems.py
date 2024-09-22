@@ -2,7 +2,10 @@
 
 
 class NumberChar:
-    """Represents a character as number."""
+    """Represents a character as number.
+
+    :meta private:
+    """
 
     __symbol_dict = {chr(ord("a") + x): x + 1 for x in range(26)}
     __format = {2: "05b", 10: "d", 16: "x"}
@@ -106,7 +109,7 @@ class NumberSystems:
             return NumberSystems(self.__seq + [other], self.__base)
         raise TypeError("Can't add these two types")
 
-    def change_base(self, base: int):
+    def change_base(self, base: int) -> None:
         """Changes the base used to convert the char to number.
 
         :param base: Int base of the desired system (2, 10, 16)
@@ -120,7 +123,7 @@ class NumberSystems:
             n.change_base(self.__base)
 
     @staticmethod
-    def get_dict():
+    def get_dict() -> dict[str, int]:
         """Returns dictionary for translating from chars to base 10 ints.
 
         :return: Translation dictionary

@@ -2,7 +2,7 @@
 Trieda Finder nájde v zadanom zozname slov/súbore (v súbore by malo byť jedno slovo na riadok).
 Funkcia is_palindrome urči či, je daná vec (hocičo, čo sa dá iterovať) palindróm.
 
-Funkcia long_word určí, či je zadaní reťazec dlhší ako 5. Spolu tento program vypíše prvý
+Funkcia long_word určí, či je zadaný reťazec dlhší ako 5. Spolu tento program vypíše prvý
 palindróm zo súboru example.txt, následne sa pridá funkcia long_word do zoznamu funkcií,
 takže volanie finder.find_all() vráti všetky palindrómy dlhšie ako 5 a vypíše ich.
 """

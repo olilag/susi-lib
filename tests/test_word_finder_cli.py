@@ -22,7 +22,7 @@ class TestWordFinder(unittest.TestCase):
             with patch("builtins.open", mock_open()) as mock_file:
                 args, kwargs = _translate(letters, length, mock_file)
                 regex = create_regex(*args, **kwargs)
-                self.assertEqual(regex.get_pattern(), result)
+                self.assertEqual(regex.pattern, result)
 
     def test_input_validation(self):
         tests = [

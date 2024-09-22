@@ -80,6 +80,7 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+docs/generated
 
 # PyBuilder
 .pybuilder/
@@ -250,3 +251,5 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 .vscode
+
+!.readthedocs.yaml

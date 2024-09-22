@@ -1,4 +1,4 @@
-"""Contains the Finder class for searching in text."""
+"""Contains the :py:class:`Finder` class for searching in text."""
 
 from collections.abc import Callable
 from typing import Literal, overload
@@ -7,13 +7,15 @@ from typing import Literal, overload
 class Finder:
     """Class for finding words that satisfy all user provided functions.
 
-    Supports lazy iteration over all matches.
+    Supports lazy iteration with ``for`` over all matches.
     """
 
     def __init__(self, inp: str | list[str], *functions: Callable[[str], bool]) -> None:
-        """Creates new Finder instance.
+        """Creates new :py:class:`Finder` instance.
 
-        :param inp: Input data. Either a filename or a list[str] containing lines
+        :raises: :py:class:`TypeError` when invalid parameter types are passed
+
+        :param inp: Input data. Either a filename or a list[str] containing individual lines
         :param functions: Functions that will determine wether a word is wanted or not
         """
         if isinstance(inp, str):
@@ -58,22 +60,24 @@ class Finder:
             if self.__valid_word(word):
                 yield word
 
-    def find_first(self):
+    def find_first(self) -> str | None:
         """Finds the first occurrence of a valid word and returns it.
 
         :return: The found word or None if no valid words are found
         """
         return self.__execute(True)
 
-    def find_all(self):
+    def find_all(self) -> list[str]:
         """Finds all occurrences of a valid words and returns them.
 
         :return: List of found valid words
         """
         return self.__execute(False)
 
-    def change_function(self, *functions: Callable[[str], bool]):
+    def change_function(self, *functions: Callable[[str], bool]) -> None:
         """Changes functions for other functions.
+
+        :raises: :py:class:`TypeError` when invalid parameter types are passed
 
         :param functions: New list of functions
         """
@@ -82,7 +86,7 @@ class Finder:
                 raise TypeError("All functions must be callable")
         self.__function = list(functions)
 
-    def add_function(self, *functions: Callable[[str], bool]):
+    def add_function(self, *functions: Callable[[str], bool]) -> None:
         """Adds new functions to constraint valid words.
 
         :param functions: New functions to add
