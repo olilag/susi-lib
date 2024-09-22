@@ -43,10 +43,11 @@ exclude = [
   "/.github",
   "/docs",
   "/tests",
-  ".pre-commit-config.yaml",
-  ".gitattributes",
   "/examples",
   "/assets",
+  ".pre-commit-config.yaml",
+  ".gitattributes",
+  ".readthedocs.yaml",
 ]
 
 [tool.hatch.build.targets.wheel]

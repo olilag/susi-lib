@@ -6,7 +6,7 @@ Python library for [SuŠi](https://susi.trojsten.sk) organizers.
 
 Provides classes and functions to more easily convert between
 encodings used in puzzle hunting, to encapsulate regular expressions and to
-find words that pass given criteria.
+find words that pass given criteria and a CLI app for finding words.
 
 ## Install
 
@@ -21,14 +21,6 @@ pip install susi-lib
 import susi_lib
 ```
 
-```python
-from susi_lib import Finder, RegEx, create_regex, Selection
-# types
-from susi_lib.types import Braille, Morse, NumberSystems, Symbols, Semaphore
-# functions
-from susi_lib.functions import decode, encode, Encoding, is_palindrome
-```
+## Pre SuŠi vedúcich
 
-## Pre suši vedúcich
-
-[Tu](./README-sk.md) je bližší návod pre vedúcich, ktorú chcú túto knižnicu používať.
+[Tu](https://susi-lib.readthedocs.io/) je bližší návod pre vedúcich, ktorú chcú túto knižnicu používať.
