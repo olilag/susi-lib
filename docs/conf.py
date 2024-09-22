@@ -11,7 +11,7 @@ import re
 project = "susi-lib"
 copyright = "2024, Oliver Lago"
 author = "Oliver Lago"
-release = re.sub("^v", "", os.popen("git describe --tags").read().strip())
+release = re.sub("^v", "", os.popen("git describe --tags").read().strip().split("-")[0])
 version = release
 
 # -- General configuration ---------------------------------------------------
