@@ -18,4 +18,4 @@ Pre spustenie testov zadaj:
 
 .. code-block:: console
 
-    $ hatch test
+    $ hatch test    # (-a spustí pre všetky podporované python verzie)
