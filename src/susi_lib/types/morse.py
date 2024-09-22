@@ -1,6 +1,11 @@
 """Provides Morse class for representing a string in morse encoding."""
 
-from typing import Self
+import sys
+
+if sys.version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
 
 
 class MorseSymbol:

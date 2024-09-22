@@ -31,9 +31,7 @@ class MyTestCase(unittest.TestCase):
             "^[^auto]{5}$",
         )
         with self.assertRaises(TypeError):
-            create_regex(
-                ("abc", Selection.NONE), ("def", Selection.NONE), ("", Selection.ANY)
-            )
+            create_regex(("abc", Selection.NONE), ("def"), ("", Selection.ANY))
         with self.assertRaises(ValueError):
             create_regex(
                 ("abc", Selection.NONE), ("def", Selection.INVERT), ("", Selection.NONE)
