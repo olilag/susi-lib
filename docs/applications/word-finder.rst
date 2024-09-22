@@ -24,7 +24,7 @@ Program vie meniť svoje správanie podľa toho, čo napíšeš za ``susi-word-f
     * - ``-h/--help``
       - zobrazí nápovedu
     * - ``-i/--input-file``
-      - tu nasleduje cesta k textovému súboru, v ktorom chceme hľadať alebo skratku slovníku :py:class:`Dictionary`
+      - tu nasleduje cesta k textovému súboru, v ktorom chceme hľadať alebo skratku slovníku :any:`Dictionary`
     * - ``-w/--word-length``
       - nasleduje číslo, aké dlhé slová má hľadať alebo rozpätie ``x-y``, ktoré znamená, že vyhľadá všetky slová dlhé ``x`` až ``y``
 

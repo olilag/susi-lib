@@ -12,7 +12,7 @@ Obsah:
    api/index
    feedback
 
-Najnovšie zmeny
+Posledné zmeny
 ---------------
 
 .. git_changelog::
