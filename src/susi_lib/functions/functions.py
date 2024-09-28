@@ -157,3 +157,21 @@ def find_anagrams(word: str, word_list: list[str]) -> list[str]:
             found_words.append(w)
 
     return found_words
+
+
+def unique_letters(word: str) -> bool:
+    """Function for checking if given ``word`` contains only unique letters.
+
+    :raises: :py:class:`TypeError` when ``word`` is not :py:class:`str`
+
+    :param word: Word to check
+    :return: ``True`` if it contains unique letters, ``False`` otherwise
+    """
+    if not isinstance(word, str):
+        raise TypeError("Word must be a string")
+    found: set[str] = set()
+    for c in word:
+        if c in found:
+            return False
+        found.add(c)
+    return True

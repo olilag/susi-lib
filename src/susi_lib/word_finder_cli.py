@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Literal, TypedDict, cast
 
 from susi_lib.dictionary import Dictionary, _Mapping
+from susi_lib.functions import unique_letters
 from susi_lib.regex import Selection, create_regex
 
 
@@ -83,10 +84,15 @@ parser.add_argument(
 parser.add_argument(
     "-i",
     "--input-file",
-    type=str,
     default=None,
     help="Path to a input file, each word should be on separate line. Or a dictionary short: \
         'PM', 'PM_a', 'S', 'S_a', 'ZT', 'ZT_a'. Default: stdin",
+)
+parser.add_argument(
+    "-u",
+    "--unique",
+    action="store_true",
+    help="If set, it finds only words with unique letters",
 )
 parser.add_argument(
     "wanted_letters",
@@ -124,5 +130,8 @@ def main() -> Literal[0, 1]:
         args_parsed.wanted_letters, word_length, args_parsed.input_file
     )
     regex = create_regex(*args, **kwargs)
-    print("\n".join(regex.execute()))
+    result = regex.execute()
+    if args_parsed.unique:
+        result = [w for w in result if unique_letters(w)]
+    print("\n".join(result))
     return 0
