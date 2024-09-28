@@ -6,4 +6,5 @@ from susi_lib.functions.functions import (
     encode,
     find_anagrams,
     is_palindrome,
+    unique_letters,
 )

@@ -27,6 +27,8 @@ Program vie meniť svoje správanie podľa toho, čo napíšeš za ``susi-word-f
       - tu nasleduje cesta k textovému súboru, v ktorom chceme hľadať alebo skratku slovníku :any:`Dictionary`
     * - ``-w/--word-length``
       - nasleduje číslo, aké dlhé slová má hľadať alebo rozpätie ``x-y``, ktoré znamená, že vyhľadá všetky slová dlhé ``x`` až ``y``
+    * - ``-u/--unique``
+      - ak pridáme túto možnosť, tak program vypíše iba slová, ktorých písmená sa neopakujú
 
 Číslo pri ``-w/--word-length`` sa použije hlavne vtedy, ak nasleduje iba
 jeden argument. Ak sa ``-w/--word-length`` nepoužije, dĺžka slova sa určí
